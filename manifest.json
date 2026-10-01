@@ -1,0 +1,17 @@
+{
+  "name": "Crypto Wallet",
+  "short_name": "Wallet",
+  "description": "Secure crypto wallet application",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#111111",
+  "theme_color": "#ffd000",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "icon.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
