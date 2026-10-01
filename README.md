@@ -3280,4 +3280,45 @@ getCurrentUser();
 
 
 </script>
+<script>
+
+async function checkEmailVerified(){
+
+  const { data, error } =
+  await window.supabaseClient.auth.getSession();
+
+
+  if(error || !data.session){
+    return;
+  }
+
+
+  const user = data.session.user;
+
+
+  // بررسی تایید ایمیل
+  if(!user.email_confirmed_at){
+
+    alert(
+      "لطفاً ابتدا ایمیل خود را تایید کنید."
+    );
+
+    await window.supabaseClient.auth.signOut();
+
+    location.reload();
+
+    return false;
+  }
+
+
+  return true;
+
+}
+
+
+// هر بار صفحه باز شد بررسی کن
+checkEmailVerified();
+
+
+</script>
 </body>
