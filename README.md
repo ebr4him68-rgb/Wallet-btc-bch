@@ -2850,10 +2850,14 @@ updateBTCBCHPrices();
 /* بروزرسانی هر 20 ثانیه */
 setInterval(updateBTCBCHPrices,20000);
 </script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-<!-- ===== END BTC + BCH ===== -->
-```
-
+<script>
+const supabase = window.supabase.createClient(
+  "https://nuwtfkflunxjfuerauom.supabase.co",
+  "sb_publishable_DKgyYcJ6XQtRJ2XjoFnkSQ_Q1IMWDac"
+);
+</script>
 <!-- ===== پایان انتخاب رنگ کیف ===== -->
 </body>
 </html># Wallet-btc-bch
