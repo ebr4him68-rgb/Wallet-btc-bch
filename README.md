@@ -3185,10 +3185,5 @@ font-size:16px;
 cursor:pointer;">
 ⬅️ برگشت
 </button>
-
-<script>
-document.getElementById("backPageBtn").onclick = function(){
-    window.history.back();
-};
 </script>
 </body>
