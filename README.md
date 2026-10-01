@@ -2304,6 +2304,366 @@ document.addEventListener("click", function(event){
 
 })();
 </script>
+
+<!-- =========================
+     GLOBAL SITE THEME SWITCHER
+     ========================= -->
+
+<style>
+#global-theme-panel{
+  position:fixed;
+  left:50%;
+  bottom:14px;
+  transform:translateX(-50%);
+  z-index:999999;
+  display:flex;
+  gap:8px;
+  padding:9px;
+  border-radius:18px;
+  background:rgba(10,10,15,.88);
+  backdrop-filter:blur(12px);
+  border:1px solid rgba(255,255,255,.18);
+  box-shadow:0 10px 35px rgba(0,0,0,.35);
+}
+
+.global-theme-btn{
+  width:42px;
+  height:42px;
+  padding:0;
+  border-radius:13px;
+  border:2px solid rgba(255,255,255,.7);
+  cursor:pointer;
+  transition:.25s;
+  box-shadow:0 4px 12px rgba(0,0,0,.3);
+}
+
+.global-theme-btn:hover{
+  transform:translateY(-3px) scale(1.06);
+  border-color:#fff;
+}
+
+.global-theme-btn.active{
+  transform:scale(1.1);
+  box-shadow:
+    0 0 0 3px rgba(255,255,255,.25),
+    0 0 18px rgba(255,255,255,.4);
+}
+
+/* -------------------------
+   تم 1: نارنجی / طلایی
+   ------------------------- */
+html[data-site-theme="orange"] body{
+  background:
+    radial-gradient(circle at top,#3b2208 0%,#111 45%,#050505 100%) !important;
+  color:#fff !important;
+}
+
+html[data-site-theme="orange"] header,
+html[data-site-theme="orange"] nav,
+html[data-site-theme="orange"] main,
+html[data-site-theme="orange"] section,
+html[data-site-theme="orange"] article,
+html[data-site-theme="orange"] .card,
+html[data-site-theme="orange"] .container{
+  --theme-main:#f7931a;
+  --theme-second:#ffd166;
+}
+
+/* -------------------------
+   تم 2: آبی / فیروزه‌ای
+   ------------------------- */
+html[data-site-theme="blue"] body{
+  background:
+    radial-gradient(circle at top,#06345b 0%,#071521 45%,#02070b 100%) !important;
+  color:#fff !important;
+}
+
+/* -------------------------
+   تم 3: بنفش / صورتی
+   ------------------------- */
+html[data-site-theme="purple"] body{
+  background:
+    radial-gradient(circle at top,#4a125d 0%,#190b29 48%,#07040c 100%) !important;
+  color:#fff !important;
+}
+
+/* -------------------------
+   تم 4: سبز / طلایی
+   ------------------------- */
+html[data-site-theme="green"] body{
+  background:
+    radial-gradient(circle at top,#073d2b 0%,#071812 48%,#020705 100%) !important;
+  color:#fff !important;
+}
+
+/* -------------------------
+   تم 5: Glam زنانه
+   ------------------------- */
+html[data-site-theme="glam"] body{
+  background:
+    radial-gradient(circle at 20% 10%,#ff4fa3 0%,transparent 28%),
+    radial-gradient(circle at 80% 20%,#8b3dff 0%,transparent 30%),
+    linear-gradient(135deg,#170715,#09030d 55%,#210617) !important;
+  color:#fff !important;
+}
+
+/* -------------------------
+   تم 6: قرمز / مشکی
+   ------------------------- */
+html[data-site-theme="red"] body{
+  background:
+    radial-gradient(circle at top,#5c0909 0%,#170606 45%,#030303 100%) !important;
+  color:#fff !important;
+}
+
+/* -------------------------
+   تم 7: طلایی / مشکی
+   ------------------------- */
+html[data-site-theme="gold"] body{
+  background:
+    radial-gradient(circle at top,#5a4507 0%,#191406 45%,#030303 100%) !important;
+  color:#fff !important;
+}
+
+/* -------------------------
+   تم 8: یخی / آبی
+   ------------------------- */
+html[data-site-theme="ice"] body{
+  background:
+    radial-gradient(circle at top,#164d70 0%,#071522 45%,#02070b 100%) !important;
+  color:#fff !important;
+}
+
+/* -------------------------
+   تم 9: صورتی / بنفش
+   ------------------------- */
+html[data-site-theme="pink"] body{
+  background:
+    radial-gradient(circle at top,#8d174f 0%,#2a0a2e 45%,#070309 100%) !important;
+  color:#fff !important;
+}
+
+/* -------------------------
+   تم 10: نئون
+   ------------------------- */
+html[data-site-theme="neon"] body{
+  background:
+    radial-gradient(circle at 30% 10%,#00c6ff 0%,transparent 25%),
+    radial-gradient(circle at 80% 80%,#ff00cc 0%,transparent 28%),
+    #030509 !important;
+  color:#fff !important;
+}
+
+/* ظاهر عمومی اجزای سایت */
+html[data-site-theme] header,
+html[data-site-theme] nav,
+html[data-site-theme] .card,
+html[data-site-theme] .wallet-card,
+html[data-site-theme] .wallet,
+html[data-site-theme] .panel,
+html[data-site-theme] .box,
+html[data-site-theme] .container-box,
+html[data-site-theme] .transaction,
+html[data-site-theme] .balance-card{
+  transition:
+    background .35s,
+    border-color .35s,
+    box-shadow .35s !important;
+}
+
+/* رنگ دکمه‌های اصلی سایت */
+html[data-site-theme] button:not(#global-theme-panel button),
+html[data-site-theme] .btn,
+html[data-site-theme] .button{
+  transition:.3s !important;
+}
+
+/* لینک‌ها */
+html[data-site-theme="orange"] a{color:#ffb347 !important}
+html[data-site-theme="blue"] a{color:#64d8ff !important}
+html[data-site-theme="purple"] a{color:#e58cff !important}
+html[data-site-theme="green"] a{color:#62ffb0 !important}
+html[data-site-theme="glam"] a{color:#ff8ac7 !important}
+html[data-site-theme="red"] a{color:#ff7777 !important}
+html[data-site-theme="gold"] a{color:#ffe082 !important}
+html[data-site-theme="ice"] a{color:#9eeaff !important}
+html[data-site-theme="pink"] a{color:#ff8fc7 !important}
+html[data-site-theme="neon"] a{color:#00ffff !important}
+
+/* پنل انتخاب تم */
+#global-theme-panel{
+  direction:ltr;
+}
+
+/* موبایل */
+@media(max-width:600px){
+  #global-theme-panel{
+    max-width:94vw;
+    overflow-x:auto;
+  }
+
+  .global-theme-btn{
+    min-width:38px;
+    width:38px;
+    height:38px;
+  }
+}
+</style>
+
+<!-- دکمه‌های دو رنگ -->
+<div id="global-theme-panel">
+
+  <!-- نارنجی + طلایی -->
+  <button class="global-theme-btn active"
+    style="background:linear-gradient(135deg,#f7931a 0 50%,#ffd166 50% 100%)"
+    title="نارنجی طلایی"
+    onclick="setGlobalTheme('orange',this)">
+  </button>
+
+  <!-- آبی + فیروزه‌ای -->
+  <button class="global-theme-btn"
+    style="background:linear-gradient(135deg,#1565c0 0 50%,#00e5ff 50% 100%)"
+    title="آبی فیروزه‌ای"
+    onclick="setGlobalTheme('blue',this)">
+  </button>
+
+  <!-- بنفش + صورتی -->
+  <button class="global-theme-btn"
+    style="background:linear-gradient(135deg,#7b1fa2 0 50%,#ff4081 50% 100%)"
+    title="بنفش صورتی"
+    onclick="setGlobalTheme('purple',this)">
+  </button>
+
+  <!-- سبز + طلایی -->
+  <button class="global-theme-btn"
+    style="background:linear-gradient(135deg,#087f5b 0 50%,#d4af37 50% 100%)"
+    title="سبز طلایی"
+    onclick="setGlobalTheme('green',this)">
+  </button>
+
+  <!-- Glam -->
+  <button class="global-theme-btn"
+    style="background:linear-gradient(135deg,#ff3f9f 0 50%,#8b3dff 50% 100%)"
+    title="Glam"
+    onclick="setGlobalTheme('glam',this)">
+  </button>
+
+  <!-- قرمز + مشکی -->
+  <button class="global-theme-btn"
+    style="background:linear-gradient(135deg,#e53935 0 50%,#111 50% 100%)"
+    title="قرمز مشکی"
+    onclick="setGlobalTheme('red',this)">
+  </button>
+
+  <!-- طلایی + مشکی -->
+  <button class="global-theme-btn"
+    style="background:linear-gradient(135deg,#ffd700 0 50%,#111 50% 100%)"
+    title="طلایی مشکی"
+    onclick="setGlobalTheme('gold',this)">
+  </button>
+
+  <!-- یخی + آبی -->
+  <button class="global-theme-btn"
+    style="background:linear-gradient(135deg,#b9f3ff 0 50%,#1677b8 50% 100%)"
+    title="یخی"
+    onclick="setGlobalTheme('ice',this)">
+  </button>
+
+  <!-- صورتی + بنفش -->
+  <button class="global-theme-btn"
+    style="background:linear-gradient(135deg,#ff4f9a 0 50%,#6a1b9a 50% 100%)"
+    title="صورتی"
+    onclick="setGlobalTheme('pink',this)">
+  </button>
+
+  <!-- نئون -->
+  <button class="global-theme-btn"
+    style="background:linear-gradient(135deg,#00ffff 0 50%,#ff00cc 50% 100%)"
+    title="نئون"
+    onclick="setGlobalTheme('neon',this)">
+  </button>
+
+</div>
+
+<script>
+function setGlobalTheme(theme, button){
+
+  /* فقط تم ظاهری سایت تغییر می‌کند */
+  document.documentElement.setAttribute(
+    'data-site-theme',
+    theme
+  );
+
+  /* دکمه فعال */
+  document.querySelectorAll('.global-theme-btn')
+    .forEach(function(btn){
+      btn.classList.remove('active');
+    });
+
+  if(button){
+    button.classList.add('active');
+  }
+
+  /* ذخیره فقط انتخاب تم */
+  try{
+    localStorage.setItem(
+      'globalSiteTheme',
+      theme
+    );
+  }catch(e){}
+}
+
+
+/* اجرای تم ذخیره‌شده */
+(function(){
+
+  let savedTheme = null;
+
+  try{
+    savedTheme = localStorage.getItem(
+      'globalSiteTheme'
+    );
+  }catch(e){}
+
+  if(savedTheme){
+    document.documentElement.setAttribute(
+      'data-site-theme',
+      savedTheme
+    );
+
+    setTimeout(function(){
+
+      document.querySelectorAll(
+        '.global-theme-btn'
+      ).forEach(function(btn){
+
+        if(
+          btn.getAttribute('onclick') &&
+          btn.getAttribute('onclick')
+            .includes("'" + savedTheme + "'")
+        ){
+          btn.classList.add('active');
+        }else{
+          btn.classList.remove('active');
+        }
+
+      });
+
+    },50);
+
+  }else{
+
+    document.documentElement.setAttribute(
+      'data-site-theme',
+      'orange'
+    );
+
+  }
+
+})();
+</script>
+```
+
 <!-- ===== پایان انتخاب رنگ کیف ===== -->
 </body>
 </html># Wallet-btc-bch
