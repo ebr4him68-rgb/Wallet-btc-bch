@@ -1298,5 +1298,1006 @@ document.addEventListener("click", function(event){
 
 })();
 </script>
+<style>
+/* =========================
+   BTC / BCH LIVE PRICE BAR
+========================= */
+
+.crypto-live-bar {
+    width: 100%;
+    display: flex;
+    gap: 12px;
+    margin: 15px 0;
+    flex-wrap: wrap;
+    box-sizing: border-box;
+}
+
+.crypto-live-card {
+    flex: 1;
+    min-width: 230px;
+    background: linear-gradient(145deg, #111827, #0b1220);
+    border: 1px solid #293752;
+    border-radius: 17px;
+    padding: 14px 16px;
+    box-sizing: border-box;
+    box-shadow: 0 6px 20px rgba(0,0,0,.25);
+}
+
+.crypto-live-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.crypto-coin-info {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+}
+
+/* لوگوی سکه */
+.crypto-logo {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    box-shadow: 0 3px 12px rgba(0,0,0,.35);
+}
+
+/* Bitcoin */
+.btc-logo {
+    background: #f7931a;
+}
+
+/* Bitcoin Cash */
+.bch-logo {
+    background: #0ac18e;
+}
+
+/* حرف B برای لوگوی بیت کوین */
+.btc-logo span {
+    color: white;
+    font-size: 27px;
+    font-weight: 900;
+    font-family: Arial, sans-serif;
+}
+
+/* لوگوی BCH */
+.bch-logo span {
+    color: white;
+    font-size: 24px;
+    font-weight: 900;
+    font-family: Arial, sans-serif;
+}
+
+.crypto-coin-name {
+    color: #aeb9cc;
+    font-size: 12px;
+}
+
+.crypto-coin-symbol {
+    color: #fff;
+    font-size: 18px;
+    font-weight: 900;
+    margin-top: 2px;
+}
+
+.crypto-live-status {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: #4ade80;
+    font-size: 11px;
+}
+
+/* چراغ سبز چشمک زن */
+.crypto-live-dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: #22c55e;
+    box-shadow: 0 0 9px #22c55e;
+    animation: cryptoBlink 1s infinite;
+}
+
+@keyframes cryptoBlink {
+
+    0%,100% {
+        opacity: 1;
+        transform: scale(1);
+        box-shadow: 0 0 9px #22c55e;
+    }
+
+    50% {
+        opacity: .25;
+        transform: scale(.75);
+        box-shadow: 0 0 2px #22c55e;
+    }
+
+}
+
+.crypto-live-price {
+    margin-top: 12px;
+    color: #fff;
+    font-size: 22px;
+    font-weight: 900;
+}
+
+.crypto-live-source {
+    margin-top: 5px;
+    color: #7f8da8;
+    font-size: 10px;
+}
+
+.crypto-live-count {
+    margin-top: 7px;
+    color: #7f8da8;
+    font-size: 10px;
+}
+
+.crypto-live-count span {
+    color: #4ade80;
+    font-weight: bold;
+}
+
+@media(max-width:600px) {
+
+    .crypto-live-bar {
+        flex-direction: column;
+    }
+
+    .crypto-live-card {
+        width: 100%;
+        min-width: 100%;
+    }
+
+}
+</style>
+
+
+<script>
+(function () {
+
+    "use strict";
+
+
+    /* =========================
+       حذف نوار قیمت قبلی
+    ========================= */
+
+    const old1 =
+        document.getElementById("liveCryptoPrices");
+
+    if (old1) {
+        old1.style.display = "none";
+    }
+
+
+    const old2 =
+        document.getElementById("multiExchangePrices");
+
+    if (old2) {
+        old2.style.display = "none";
+    }
+
+
+    const old3 =
+        document.querySelector(".pricebar");
+
+    if (old3) {
+        old3.style.display = "none";
+    }
+
+
+    /* =========================
+       ساخت نوار جدید
+    ========================= */
+
+    function createCryptoBar() {
+
+        if (
+            document.getElementById(
+                "officialCryptoLiveBar"
+            )
+        ) {
+            return;
+        }
+
+
+        const bar =
+            document.createElement("div");
+
+        bar.id =
+            "officialCryptoLiveBar";
+
+        bar.className =
+            "crypto-live-bar";
+
+
+        bar.innerHTML = `
+
+            <!-- ================= BTC ================= -->
+
+            <div class="crypto-live-card">
+
+                <div class="crypto-live-top">
+
+                    <div class="crypto-coin-info">
+
+                        <div class="crypto-logo btc-logo">
+                            <span>₿</span>
+                        </div>
+
+                        <div>
+
+                            <div class="crypto-coin-name">
+                                Bitcoin
+                            </div>
+
+                            <div class="crypto-coin-symbol">
+                                BTC
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="crypto-live-status">
+
+                        <span class="crypto-live-dot"></span>
+
+                        آنلاین
+
+                    </div>
+
+                </div>
+
+
+                <div
+                    id="officialBTCPrice"
+                    class="crypto-live-price">
+
+                    در حال دریافت...
+
+                </div>
+
+
+                <div class="crypto-live-source">
+                    قیمت تجمیعی بازار
+                </div>
+
+
+                <div class="crypto-live-count">
+
+                    منابع فعال:
+                    <span id="officialBTCCount">
+                        0
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- ================= BCH ================= -->
+
+            <div class="crypto-live-card">
+
+                <div class="crypto-live-top">
+
+                    <div class="crypto-coin-info">
+
+                        <div class="crypto-logo bch-logo">
+
+                            <span>
+                                ₿
+                            </span>
+
+                        </div>
+
+                        <div>
+
+                            <div class="crypto-coin-name">
+                                Bitcoin Cash
+                            </div>
+
+                            <div class="crypto-coin-symbol">
+                                BCH
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="crypto-live-status">
+
+                        <span class="crypto-live-dot"></span>
+
+                        آنلاین
+
+                    </div>
+
+                </div>
+
+
+                <div
+                    id="officialBCHPrice"
+                    class="crypto-live-price">
+
+                    در حال دریافت...
+
+                </div>
+
+
+                <div class="crypto-live-source">
+                    قیمت تجمیعی بازار
+                </div>
+
+
+                <div class="crypto-live-count">
+
+                    منابع فعال:
+                    <span id="officialBCHCount">
+                        0
+                    </span>
+
+                </div>
+
+            </div>
+
+        `;
+
+
+        const header =
+            document.querySelector("header");
+
+
+        if (
+            header &&
+            header.parentNode
+        ) {
+
+            header.parentNode.insertBefore(
+                bar,
+                header.nextSibling
+            );
+
+        } else {
+
+            document.body.prepend(bar);
+
+        }
+
+    }
+
+
+    /* =========================
+       دریافت اطلاعات
+    ========================= */
+
+    async function getJSON(url) {
+
+        try {
+
+            const controller =
+                new AbortController();
+
+
+            const timer =
+                setTimeout(
+                    function () {
+                        controller.abort();
+                    },
+                    7000
+                );
+
+
+            const response =
+                await fetch(
+                    url,
+                    {
+                        cache: "no-store",
+                        signal: controller.signal
+                    }
+                );
+
+
+            clearTimeout(timer);
+
+
+            if (!response.ok) {
+                throw new Error("API Error");
+            }
+
+
+            return await response.json();
+
+        } catch (error) {
+
+            return null;
+
+        }
+
+    }
+
+
+    /* =========================
+       بررسی قیمت
+    ========================= */
+
+    function goodPrice(value) {
+
+        return (
+            typeof value === "number" &&
+            isFinite(value) &&
+            value > 0
+        );
+
+    }
+
+
+    /* =========================
+       Binance
+    ========================= */
+
+    async function getBinance() {
+
+        const btc =
+            await getJSON(
+                "https://api.binance.com/api/v3/ticker/price?symbol=BTCUSDT"
+            );
+
+
+        const bch =
+            await getJSON(
+                "https://api.binance.com/api/v3/ticker/price?symbol=BCHUSDT"
+            );
+
+
+        return {
+
+            btc:
+                btc
+                ? Number(btc.price)
+                : null,
+
+            bch:
+                bch
+                ? Number(bch.price)
+                : null
+
+        };
+
+    }
+
+
+    /* =========================
+       Kraken
+    ========================= */
+
+    async function getKraken() {
+
+        const btc =
+            await getJSON(
+                "https://api.kraken.com/0/public/Ticker?pair=XBTUSDT"
+            );
+
+
+        const bch =
+            await getJSON(
+                "https://api.kraken.com/0/public/Ticker?pair=BCHUSDT"
+            );
+
+
+        let btcPrice = null;
+        let bchPrice = null;
+
+
+        if (
+            btc &&
+            btc.result
+        ) {
+
+            const key =
+                Object.keys(
+                    btc.result
+                )[0];
+
+
+            if (key) {
+
+                btcPrice =
+                    Number(
+                        btc.result[key].c[0]
+                    );
+
+            }
+
+        }
+
+
+        if (
+            bch &&
+            bch.result
+        ) {
+
+            const key =
+                Object.keys(
+                    bch.result
+                )[0];
+
+
+            if (key) {
+
+                bchPrice =
+                    Number(
+                        bch.result[key].c[0]
+                    );
+
+            }
+
+        }
+
+
+        return {
+
+            btc: btcPrice,
+            bch: bchPrice
+
+        };
+
+    }
+
+
+    /* =========================
+       Coinbase
+    ========================= */
+
+    async function getCoinbase() {
+
+        const btc =
+            await getJSON(
+                "https://api.coinbase.com/v2/prices/BTC-USD/spot"
+            );
+
+
+        const bch =
+            await getJSON(
+                "https://api.coinbase.com/v2/prices/BCH-USD/spot"
+            );
+
+
+        return {
+
+            btc:
+                btc &&
+                btc.data
+                ? Number(
+                    btc.data.amount
+                )
+                : null,
+
+            bch:
+                bch &&
+                bch.data
+                ? Number(
+                    bch.data.amount
+                )
+                : null
+
+        };
+
+    }
+
+
+    /* =========================
+       CoinGecko
+    ========================= */
+
+    async function getCoinGecko() {
+
+        const data =
+            await getJSON(
+                "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,bitcoin-cash&vs_currencies=usd"
+            );
+
+
+        return {
+
+            btc:
+                data &&
+                data.bitcoin
+                ? Number(
+                    data.bitcoin.usd
+                )
+                : null,
+
+            bch:
+                data &&
+                data["bitcoin-cash"]
+                ? Number(
+                    data["bitcoin-cash"].usd
+                )
+                : null
+
+        };
+
+    }
+
+
+    /* =========================
+       Bitfinex
+    ========================= */
+
+    async function getBitfinex() {
+
+        const btc =
+            await getJSON(
+                "https://api-pub.bitfinex.com/v2/ticker/tBTCUSD"
+            );
+
+
+        const bch =
+            await getJSON(
+                "https://api-pub.bitfinex.com/v2/ticker/tBCHUSD"
+            );
+
+
+        return {
+
+            btc:
+                btc
+                ? Number(btc[6])
+                : null,
+
+            bch:
+                bch
+                ? Number(bch[6])
+                : null
+
+        };
+
+    }
+
+
+    /* =========================
+       OKX
+    ========================= */
+
+    async function getOKX() {
+
+        const btc =
+            await getJSON(
+                "https://www.okx.com/api/v5/market/ticker?instId=BTC-USDT"
+            );
+
+
+        const bch =
+            await getJSON(
+                "https://www.okx.com/api/v5/market/ticker?instId=BCH-USDT"
+            );
+
+
+        return {
+
+            btc:
+                btc &&
+                btc.data &&
+                btc.data[0]
+                ? Number(
+                    btc.data[0].last
+                )
+                : null,
+
+            bch:
+                bch &&
+                bch.data &&
+                bch.data[0]
+                ? Number(
+                    bch.data[0].last
+                )
+                : null
+
+        };
+
+    }
+
+
+    /* =========================
+       Gemini
+    ========================= */
+
+    async function getGemini() {
+
+        const btc =
+            await getJSON(
+                "https://api.gemini.com/v1/pubticker/btcusd"
+            );
+
+
+        const bch =
+            await getJSON(
+                "https://api.gemini.com/v1/pubticker/bchusd"
+            );
+
+
+        return {
+
+            btc:
+                btc
+                ? Number(btc.last)
+                : null,
+
+            bch:
+                bch
+                ? Number(bch.last)
+                : null
+
+        };
+
+    }
+
+
+    /* =========================
+       Crypto.com
+    ========================= */
+
+    async function getCryptoCom() {
+
+        const btc =
+            await getJSON(
+                "https://api.crypto.com/exchange/v1/public/get-ticker?instrument_name=BTC_USDT"
+            );
+
+
+        const bch =
+            await getJSON(
+                "https://api.crypto.com/exchange/v1/public/get-ticker?instrument_name=BCH_USDT"
+            );
+
+
+        return {
+
+            btc:
+                btc &&
+                btc.result &&
+                btc.result.data &&
+                btc.result.data[0]
+                ? Number(
+                    btc.result.data[0].a
+                )
+                : null,
+
+            bch:
+                bch &&
+                bch.result &&
+                bch.result.data &&
+                bch.result.data[0]
+                ? Number(
+                    bch.result.data[0].a
+                )
+                : null
+
+        };
+
+    }
+
+
+    /* =========================
+       محاسبه قیمت نهایی
+    ========================= */
+
+    function calculateAverage(values) {
+
+        const valid =
+            values.filter(
+                goodPrice
+            );
+
+
+        if (!valid.length) {
+            return null;
+        }
+
+
+        return (
+            valid.reduce(
+                function(sum, value) {
+                    return sum + value;
+                },
+                0
+            ) / valid.length
+        );
+
+    }
+
+
+    /* =========================
+       بروزرسانی قیمت
+    ========================= */
+
+    async function updatePrices() {
+
+        const requests = [
+
+            getBinance(),
+            getKraken(),
+            getCoinbase(),
+            getCoinGecko(),
+            getBitfinex(),
+            getOKX(),
+            getGemini(),
+            getCryptoCom()
+
+        ];
+
+
+        const results =
+            await Promise.allSettled(
+                requests
+            );
+
+
+        const btcPrices = [];
+        const bchPrices = [];
+
+
+        results.forEach(
+            function(result) {
+
+                if (
+                    result.status ===
+                    "fulfilled"
+                ) {
+
+                    const value =
+                        result.value;
+
+
+                    if (
+                        value &&
+                        goodPrice(value.btc)
+                    ) {
+
+                        btcPrices.push(
+                            value.btc
+                        );
+
+                    }
+
+
+                    if (
+                        value &&
+                        goodPrice(value.bch)
+                    ) {
+
+                        bchPrices.push(
+                            value.bch
+                        );
+
+                    }
+
+                }
+
+            }
+        );
+
+
+        const btc =
+            calculateAverage(
+                btcPrices
+            );
+
+
+        const bch =
+            calculateAverage(
+                bchPrices
+            );
+
+
+        const btcElement =
+            document.getElementById(
+                "officialBTCPrice"
+            );
+
+
+        const bchElement =
+            document.getElementById(
+                "officialBCHPrice"
+            );
+
+
+        const btcCount =
+            document.getElementById(
+                "officialBTCCount"
+            );
+
+
+        const bchCount =
+            document.getElementById(
+                "officialBCHCount"
+            );
+
+
+        if (
+            btcElement &&
+            goodPrice(btc)
+        ) {
+
+            btcElement.textContent =
+                "$" +
+                btc.toLocaleString(
+                    "en-US",
+                    {
+                        minimumFractionDigits: 2,
+                        maximumFractionDigits: 2
+                    }
+                );
+
+        }
+
+
+        if (
+            bchElement &&
+            goodPrice(bch)
+        ) {
+
+            bchElement.textContent =
+                "$" +
+                bch.toLocaleString(
+                    "en-US",
+                    {
+                        minimumFractionDigits: 2,
+                        maximumFractionDigits: 2
+                    }
+                );
+
+        }
+
+
+        if (btcCount) {
+
+            btcCount.textContent =
+                btcPrices.length;
+
+        }
+
+
+        if (bchCount) {
+
+            bchCount.textContent =
+                bchPrices.length;
+
+        }
+
+    }
+
+
+    /* =========================
+       اجرا
+    ========================= */
+
+    createCryptoBar();
+
+    updatePrices();
+
+
+    /*
+       هر 20 ثانیه بروزرسانی
+    */
+
+    setInterval(
+        updatePrices,
+        20000
+    );
+
+
+})();
+</script>
 </body>
 </html># Wallet-btc-bch
