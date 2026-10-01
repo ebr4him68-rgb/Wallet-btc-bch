@@ -3170,4 +3170,25 @@ function startAdminRealtime(){
 // کمی صبر می‌کنیم تا Supabase لود شود
 setTimeout(startAdminRealtime, 1500);
 </script>
+<button id="backPageBtn" 
+style="
+position:fixed;
+top:15px;
+right:15px;
+z-index:999999;
+background:#ffd000;
+color:#000;
+border:none;
+border-radius:10px;
+padding:10px 15px;
+font-size:16px;
+cursor:pointer;">
+⬅️ برگشت
+</button>
+
+<script>
+document.getElementById("backPageBtn").onclick = function(){
+    window.history.back();
+};
+</script>
 </body>
