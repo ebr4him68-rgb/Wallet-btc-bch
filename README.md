@@ -3183,7 +3183,6 @@ border-radius:10px;
 padding:10px 15px;
 font-size:16px;
 cursor:pointer;">
-⬅️ برگشت
 </button>
 </script>
 </body>
