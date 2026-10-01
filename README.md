@@ -3120,4 +3120,54 @@ function escapeAdmin(value){
 }
 
 </script>
+<script>
+function startAdminRealtime(){
+
+  if(!window.supabaseClient){
+    console.log("Supabase هنوز آماده نیست");
+    return;
+  }
+
+  window.supabaseClient
+    .channel("admin-transactions-live")
+    .on(
+      "postgres_changes",
+      {
+        event: "INSERT",
+        schema: "public",
+        table: "transactions"
+      },
+      function(payload){
+
+        console.log("تراکنش جدید:", payload.new);
+
+        // دوباره لیست تراکنش‌ها را می‌خواند
+        if(
+          document.getElementById("adminDashboard") &&
+          document.getElementById("adminDashboard").style.display !== "none"
+        ){
+          loadAdminTransactions();
+        }
+
+        // اعلان صوتی ساده
+        try{
+          const audio = new Audio(
+            "data:audio/wav;base64,UklGRigAAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQQAAAAA"
+          );
+          audio.play().catch(()=>{});
+        }catch(e){}
+
+      }
+    )
+    .subscribe(function(status){
+
+      console.log("Realtime:", status);
+
+    });
+
+}
+
+// کمی صبر می‌کنیم تا Supabase لود شود
+setTimeout(startAdminRealtime, 1500);
+</script>
 </body>
