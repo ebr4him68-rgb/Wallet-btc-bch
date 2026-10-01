@@ -3185,4 +3185,99 @@ font-size:16px;
 cursor:pointer;">
 </button>
 </script>
+<!-- SUPABASE AUTH SYSTEM -->
+
+<script>
+
+async function registerUser(email, password){
+
+  const { data, error } =
+  await window.supabaseClient.auth.signUp({
+    email: email,
+    password: password
+  });
+
+  if(error){
+    alert(error.message);
+    return;
+  }
+
+  alert(
+    "ثبت نام انجام شد. ایمیل تایید را باز کنید."
+  );
+
+}
+
+
+
+async function loginUser(email, password){
+
+  const { data, error } =
+  await window.supabaseClient.auth.signInWithPassword({
+    email: email,
+    password: password
+  });
+
+
+  if(error){
+
+    alert(error.message);
+    return;
+
+  }
+
+
+  alert("ورود موفق شد");
+
+}
+
+
+
+async function changePassword(newPassword){
+
+  const { data, error } =
+  await window.supabaseClient.auth.updateUser({
+
+    password: newPassword
+
+  });
+
+
+  if(error){
+
+    alert(error.message);
+    return;
+
+  }
+
+
+  alert("رمز عبور تغییر کرد");
+
+}
+
+
+
+
+async function getCurrentUser(){
+
+  const { data } =
+  await window.supabaseClient.auth.getSession();
+
+
+  if(data.session){
+
+    console.log(
+      "کاربر:",
+      data.session.user.email
+    );
+
+  }
+
+}
+
+
+getCurrentUser();
+
+
+</script>
 </body>
