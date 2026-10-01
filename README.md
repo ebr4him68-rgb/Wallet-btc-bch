@@ -1193,6 +1193,110 @@ document.addEventListener("click", function(event){
 });
 
 </script>
+<style>
+.wallet-back-btn{
+    width:100%;
+    margin-bottom:15px;
+    padding:13px 16px;
+    border:1px solid #303b5b;
+    border-radius:13px;
+    background:#202a46;
+    color:#fff;
+    font-family:inherit;
+    font-size:15px;
+    font-weight:bold;
+    cursor:pointer;
+    transition:.2s;
+}
 
+.wallet-back-btn:hover{
+    background:#2d3a5d;
+    transform:translateY(-1px);
+}
+
+.wallet-back-btn:active{
+    transform:scale(.98);
+}
+</style>
+
+<script>
+(function(){
+
+    function addBackButton(){
+
+        const sendCard = document.getElementById("sendCard");
+
+        if(!sendCard){
+            return;
+        }
+
+        /* جلوگیری از ساخته شدن چند دکمه */
+        if(document.getElementById("walletBackButton")){
+            return;
+        }
+
+        const button = document.createElement("button");
+
+        button.id = "walletBackButton";
+        button.type = "button";
+        button.className = "wallet-back-btn";
+        button.textContent = "← برگشت به صفحه اصلی";
+
+        /* دکمه را اول بخش ارسال قرار می‌دهیم */
+        sendCard.insertBefore(
+            button,
+            sendCard.firstChild
+        );
+
+        button.addEventListener("click", function(){
+
+            /* بستن صفحه ارسال */
+            sendCard.classList.add("hidden");
+
+            /* بستن صفحه دریافت در صورت باز بودن */
+            const receiveCard =
+                document.getElementById("receiveCard");
+
+            if(receiveCard){
+                receiveCard.classList.add("hidden");
+            }
+
+            /* پاک کردن فرم ارسال */
+            const destination =
+                document.getElementById("destination");
+
+            const amount =
+                document.getElementById("amount");
+
+            if(destination){
+                destination.value = "";
+            }
+
+            if(amount){
+                amount.value = "";
+            }
+
+            /* پاک کردن پیام قبلی */
+            const requestStatus =
+                document.getElementById("requestStatus");
+
+            if(requestStatus){
+                requestStatus.textContent = "";
+                requestStatus.style.display = "none";
+            }
+
+        });
+
+    }
+
+
+    /*
+      چون sendCard از قبل در صفحه وجود دارد،
+      دکمه را مستقیماً اضافه می‌کنیم.
+    */
+    addBackButton();
+
+})();
+</script>
 </body>
 </html># Wallet-btc-bch
