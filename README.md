@@ -2858,6 +2858,13 @@ const supabase = window.supabase.createClient(
   "sb_publishable_DKgyYcJ6XQtRJ2XjoFnkSQ_Q1IMWDac"
 );
 </script>
-<!-- ===== پایان انتخاب رنگ کیف ===== -->
+<!-- SUPABASE CONNECTION -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+window.supabaseClient = window.supabase.createClient(
+  "https://nuwtfkflunxjfuerauom.supabase.co",
+  "sb_publishable_DKgyYcJ6XQtRJ2XjoFnkSQ_Q1IMWDac"
+);
+</script>
 </body>
-</html># Wallet-btc-bch
