@@ -2870,4 +2870,254 @@ window.supabaseClient = window.supabase.createClient(
 <!-- SUPABASE CONNECTION -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </script>
+<!-- ADMIN PANEL -->
+<style>
+#adminPanel{
+  display:none;
+  position:fixed;
+  inset:0;
+  z-index:99999;
+  background:#111;
+  color:#fff;
+  padding:20px;
+  overflow:auto;
+  direction:rtl;
+  font-family:Arial;
+}
+
+.admin-box{
+  max-width:700px;
+  margin:auto;
+}
+
+.admin-box h2{
+  text-align:center;
+  color:#ffd000;
+}
+
+.admin-input{
+  width:100%;
+  box-sizing:border-box;
+  padding:13px;
+  margin:7px 0;
+  border-radius:8px;
+  border:1px solid #555;
+  background:#222;
+  color:#fff;
+}
+
+.admin-btn{
+  width:100%;
+  padding:13px;
+  margin-top:8px;
+  border:0;
+  border-radius:8px;
+  background:#ffd000;
+  color:#111;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+.admin-close{
+  background:#d22;
+  color:white;
+}
+
+#adminLogin{
+  max-width:400px;
+  margin:80px auto;
+  text-align:center;
+}
+</style>
+
+<!-- دکمه ورود ادمین -->
+<button
+  onclick="openAdminLogin()"
+  style="
+  position:fixed;
+  top:15px;
+  left:15px;
+  z-index:9999;
+  background:#222;
+  color:#ffd000;
+  border:1px solid #ffd000;
+  border-radius:8px;
+  padding:8px 12px;
+  ">
+  🔐 ادمین
+</button>
+
+<div id="adminPanel">
+
+  <div id="adminLogin">
+
+    <h2>🔐 ورود مدیر</h2>
+
+    <input
+      id="adminPassword"
+      class="admin-input"
+      type="password"
+      placeholder="رمز عبور مدیر">
+
+    <button class="admin-btn" onclick="loginAdmin()">
+      ورود به پنل
+    </button>
+
+    <p id="adminError" style="color:#ff4444;"></p>
+
+  </div>
+
+  <div class="admin-box" id="adminDashboard" style="display:none">
+
+    <h2>👑 پنل مدیریت</h2>
+
+    <button class="admin-btn" onclick="loadAdminTransactions()">
+      🔄 دریافت تراکنش‌ها
+    </button>
+
+    <div id="adminTransactions" style="margin-top:20px">
+      هنوز تراکنشی دریافت نشده است.
+    </div>
+
+    <button
+      class="admin-btn admin-close"
+      onclick="closeAdmin()">
+      خروج از پنل
+    </button>
+
+  </div>
+
+</div>
+
+<script>
+
+const ADMIN_PASSWORD = "Admin321";
+
+function openAdminLogin(){
+
+  document.getElementById("adminPanel").style.display = "block";
+
+}
+
+function loginAdmin(){
+
+  const pass =
+    document.getElementById("adminPassword").value;
+
+  if(pass === ADMIN_PASSWORD){
+
+    document.getElementById("adminLogin").style.display = "none";
+
+    document.getElementById("adminDashboard").style.display = "block";
+
+    loadAdminTransactions();
+
+  }else{
+
+    document.getElementById("adminError").textContent =
+      "رمز عبور اشتباه است";
+
+  }
+
+}
+
+function closeAdmin(){
+
+  document.getElementById("adminPanel").style.display = "none";
+
+  document.getElementById("adminLogin").style.display = "block";
+
+  document.getElementById("adminDashboard").style.display = "none";
+
+  document.getElementById("adminPassword").value = "";
+
+}
+
+async function loadAdminTransactions(){
+
+  const box =
+    document.getElementById("adminTransactions");
+
+  box.innerHTML = "در حال دریافت تراکنش‌ها...";
+
+  try{
+
+    const { data, error } =
+      await window.supabaseClient
+      .from("transactions")
+      .select("*")
+      .order("created_at", { ascending:false });
+
+    if(error){
+
+      box.innerHTML =
+        "خطا در دریافت تراکنش‌ها:<br>" +
+        error.message;
+
+      return;
+
+    }
+
+    if(!data || data.length === 0){
+
+      box.innerHTML = "هنوز تراکنشی ثبت نشده است.";
+
+      return;
+
+    }
+
+    box.innerHTML = "";
+
+    data.forEach(function(tx){
+
+      const item = document.createElement("div");
+
+      item.style.cssText = `
+        background:#202020;
+        border:1px solid #444;
+        border-radius:10px;
+        padding:15px;
+        margin-bottom:12px;
+      `;
+
+      item.innerHTML = `
+        <b>🪙 ارز:</b> ${escapeAdmin(tx.coin)}<br>
+        <b>💰 مقدار:</b> ${escapeAdmin(tx.amount)}<br>
+        <b>📧 کاربر:</b> ${escapeAdmin(tx.user_id)}<br>
+        <b>📍 آدرس مقصد:</b><br>
+        <span style="word-break:break-all">
+        ${escapeAdmin(tx.to_address)}
+        </span><br>
+        <b>📌 وضعیت:</b> ${escapeAdmin(tx.status)}<br>
+        <b>🧾 TxID:</b>
+        ${escapeAdmin(tx.txid || "هنوز ثبت نشده")}<br>
+        <b>🕐 تاریخ:</b>
+        ${escapeAdmin(tx.created_at)}
+      `;
+
+      box.appendChild(item);
+
+    });
+
+  }catch(err){
+
+    box.innerHTML =
+      "خطا: " + err.message;
+
+  }
+
+}
+
+function escapeAdmin(value){
+
+  return String(value ?? "")
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
+
+}
+
+</script>
 </body>
