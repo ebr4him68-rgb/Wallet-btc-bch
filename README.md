@@ -3321,4 +3321,106 @@ checkEmailVerified();
 
 
 </script>
+<!-- USER BALANCE BOX -->
+
+<div id="balanceBox" style="
+position:relative;
+margin:15px auto;
+max-width:400px;
+background:#111;
+color:white;
+border-radius:15px;
+padding:20px;
+text-align:center;
+direction:rtl;
+">
+
+<div style="font-size:28px;color:#00ff66;font-weight:bold;">
+$ <span id="usdBalance">0</span>
+</div>
+
+<div style="margin-top:15px;font-size:18px;">
+₿ Bitcoin:
+<span id="btcBalance">0</span>
+</div>
+
+<div style="margin-top:10px;font-size:18px;">
+🟢 Bitcoin Cash:
+<span id="bchBalance">0</span>
+</div>
+
+</div>
+
+
+<script>
+
+let userBalance = {
+ btc:0,
+ bch:0,
+ usd:0
+};
+
+
+// نمایش موجودی
+function showBalance(){
+
+document.getElementById("btcBalance").innerHTML =
+userBalance.btc + " BTC";
+
+
+document.getElementById("bchBalance").innerHTML =
+userBalance.bch + " BCH";
+
+
+document.getElementById("usdBalance").innerHTML =
+userBalance.usd.toFixed(2);
+
+}
+
+
+// قیمت تقریبی و تبدیل به دلار
+async function updateUSD(){
+
+try{
+
+let r =
+await fetch(
+"https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,bitcoin-cash&vs_currencies=usd"
+);
+
+let p = await r.json();
+
+
+let btcPrice =
+p.bitcoin.usd;
+
+
+let bchPrice =
+p["bitcoin-cash"].usd;
+
+
+userBalance.usd =
+(userBalance.btc * btcPrice)
++
+(userBalance.bch * bchPrice);
+
+
+showBalance();
+
+
+}catch(e){
+
+console.log("price error");
+
+}
+
+}
+
+
+updateUSD();
+
+setInterval(updateUSD,60000);
+
+
+</script>
 </body>
