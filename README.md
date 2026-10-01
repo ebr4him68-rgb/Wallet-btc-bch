@@ -2661,7 +2661,197 @@ function setGlobalTheme(theme, button){
   }
 
 })();
+</script>```html
+<!-- ===== LIVE BTC + BCH PRICE BANNER ===== -->
+
+<style>
+.crypto-price-banner{
+  width:calc(100% - 20px);
+  margin:12px auto 18px;
+  padding:10px;
+  background:#050505;
+  border:1px solid #252525;
+  border-radius:16px;
+  display:flex;
+  gap:10px;
+  direction:ltr;
+  box-sizing:border-box;
+  box-shadow:0 6px 22px rgba(0,0,0,.45);
+}
+
+.crypto-price-box{
+  flex:1;
+  background:#101010;
+  border:1px solid #292929;
+  border-radius:12px;
+  padding:12px 8px;
+  text-align:center;
+}
+
+.crypto-title{
+  font-size:15px;
+  font-weight:900;
+  margin-bottom:5px;
+}
+
+.crypto-symbol{
+  color:#888;
+  font-size:10px;
+  margin-bottom:7px;
+}
+
+.crypto-value{
+  color:#fff;
+  font-size:17px;
+  font-weight:900;
+  white-space:nowrap;
+}
+
+.price-dot{
+  display:inline-block;
+  width:7px;
+  height:7px;
+  border-radius:50%;
+  margin-right:5px;
+  animation:pricePulse 1s infinite;
+}
+
+@keyframes pricePulse{
+  0%,100%{opacity:1}
+  50%{opacity:.25}
+}
+
+/* BTC */
+.btc-box .crypto-title{
+  color:#ff9500;
+}
+
+.btc-box .price-dot{
+  background:#ff9500;
+  box-shadow:0 0 9px #ff9500;
+}
+
+/* BCH */
+.bch-box .crypto-title{
+  color:#20df70;
+}
+
+.bch-box .price-dot{
+  background:#20df70;
+  box-shadow:0 0 9px #20df70;
+}
+
+@media(max-width:600px){
+  .crypto-price-banner{
+    gap:7px;
+    padding:7px;
+  }
+
+  .crypto-price-box{
+    padding:9px 4px;
+  }
+
+  .crypto-title{
+    font-size:12px;
+  }
+
+  .crypto-value{
+    font-size:13px;
+  }
+}
+</style>
+
+<div class="crypto-price-banner">
+
+  <!-- BTC -->
+  <div class="crypto-price-box btc-box">
+    <div class="crypto-title">
+      <span class="price-dot"></span>
+      BITCOIN
+    </div>
+
+    <div class="crypto-symbol">
+      BTC / USD
+    </div>
+
+    <div class="crypto-value" id="btcLivePrice">
+      Loading...
+    </div>
+  </div>
+
+  <!-- BCH -->
+  <div class="crypto-price-box bch-box">
+    <div class="crypto-title">
+      <span class="price-dot"></span>
+      BITCOIN CASH
+    </div>
+
+    <div class="crypto-symbol">
+      BCH / USD
+    </div>
+
+    <div class="crypto-value" id="bchLivePrice">
+      Loading...
+    </div>
+  </div>
+
+</div>
+
+<script>
+async function updateBTCBCHPrices(){
+
+  try{
+
+    const response = await fetch(
+      "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,bitcoin-cash&vs_currencies=usd",
+      {cache:"no-store"}
+    );
+
+    if(!response.ok){
+      throw new Error("Price API error");
+    }
+
+    const data = await response.json();
+
+    if(data.bitcoin?.usd){
+      document.getElementById("btcLivePrice").textContent =
+        "$" + Number(data.bitcoin.usd).toLocaleString(
+          "en-US",
+          {
+            minimumFractionDigits:2,
+            maximumFractionDigits:2
+          }
+        );
+    }
+
+    if(data["bitcoin-cash"]?.usd){
+      document.getElementById("bchLivePrice").textContent =
+        "$" + Number(data["bitcoin-cash"].usd).toLocaleString(
+          "en-US",
+          {
+            minimumFractionDigits:2,
+            maximumFractionDigits:2
+          }
+        );
+    }
+
+  }catch(error){
+
+    console.log("BTC/BCH price error:",error);
+
+    /* در صورت قطع موقت API،
+       قیمت قبلی باقی می‌ماند */
+  }
+}
+
+/* دریافت اولیه */
+updateBTCBCHPrices();
+
+/* بروزرسانی هر 20 ثانیه */
+setInterval(updateBTCBCHPrices,20000);
 </script>
+
+<!-- ===== END BTC + BCH ===== -->
 ```
 
 <!-- ===== پایان انتخاب رنگ کیف ===== -->
