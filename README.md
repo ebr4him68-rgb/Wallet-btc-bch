@@ -1,4 +1,4 @@
-
+<link rel="manifest" href="manifest.json">
 <html lang="fa" dir="rtl">
 <head>
 <meta charset="UTF-8">
