@@ -576,5 +576,166 @@ alert("درخواست ارسال ثبت شد");
 
 
   </script>
+  <!-- پنل جدید BTC BCH -->
+
+<div class="card">
+
+<h2>💱 BTC / BCH Wallet</h2>
+
+
+<div style="display:flex;gap:10px;">
+
+
+<div style="width:50%;background:#f2f2f2;border-radius:15px;padding:10px;">
+
+<h3>🟠 Bitcoin</h3>
+
+<button onclick="btcPanel()">
+دریافت BTC
+</button>
+
+<p id="btcPanelAddress" class="address">
+آدرس نمایش داده می‌شود
+</p>
+
+
+<button onclick="copyBtcAddress()">
+کپی آدرس
+</button>
+
+
+</div>
+
+
+
+<div style="width:50%;background:#f2f2f2;border-radius:15px;padding:10px;">
+
+<h3>🟢 Bitcoin Cash</h3>
+
+<button onclick="bchPanel()">
+دریافت BCH
+</button>
+
+
+<p id="bchPanelAddress" class="address">
+آدرس نمایش داده می‌شود
+</p>
+
+
+<button onclick="copyBchAddress()">
+کپی آدرس
+</button>
+
+
+</div>
+
+
+</div>
+
+
+<hr>
+
+
+<h3>📤 ارسال ارز</h3>
+
+
+<select id="sendCurrency">
+
+<option value="BTC">
+Bitcoin BTC
+</option>
+
+
+<option value="BCH">
+Bitcoin Cash BCH
+</option>
+
+
+</select>
+
+
+<br>
+
+
+<input id="sendAmount2" placeholder="مقدار ارسال">
+
+
+<input id="receiverAddress" placeholder="آدرس مقصد">
+
+
+<p id="sendDollar">
+ارزش: 0.00 USD
+</p>
+
+
+<button onclick="createSend()">
+ثبت ارسال
+</button>
+
+
+</div>
+
+
+
+
+<script>
+
+
+const BTC_ADDRESS =
+"1Q99GpYnEU9yELNLjiJUWopNT1HatRYQrV";
+
+
+const BCH_ADDRESS =
+"bitcoincash:qrj64uh0xlah2wzksudq3g5eeg2ewdyg6urq5kywku";
+
+
+
+function btcPanel(){
+
+document.getElementById("btcPanelAddress").innerHTML=
+BTC_ADDRESS;
+
+}
+
+
+
+function bchPanel(){
+
+document.getElementById("bchPanelAddress").innerHTML=
+BCH_ADDRESS;
+
+}
+
+
+
+function copyBtcAddress(){
+
+navigator.clipboard.writeText(BTC_ADDRESS);
+
+alert("BTC کپی شد");
+
+}
+
+
+
+function copyBchAddress(){
+
+navigator.clipboard.writeText(BCH_ADDRESS);
+
+alert("BCH کپی شد");
+
+}
+
+
+
+function createSend(){
+
+alert("درخواست ارسال ثبت شد");
+
+}
+
+
+
+</script>
 </body>
   </html>
