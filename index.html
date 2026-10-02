@@ -280,6 +280,59 @@ setInterval(prices,60000);
 
 </script>
 
+<script>
 
+// اضافه کردن ارزهای جدید به کیف
+
+coins.DOGE = {
+name:"Dogecoin DOGE",
+address:"DA9b1AqJqgsdFNuJNjzRo2g5wFj1rEeQLk"
+};
+
+
+coins.LTC = {
+name:"Litecoin LTC",
+address:"LZeRDFWbPLpuqeAw7m5i5YcYiu32KRAM6c"
+};
+
+
+// اضافه کردن نمایش به لیست کیف
+
+document.querySelector(".wallet").insertAdjacentHTML(
+"beforeend",
+
+`
+<div class="coin" onclick="openCoin('DOGE')">
+
+<h3>🐕 Dogecoin DOGE</h3>
+
+موجودی:
+0.000000 DOGE
+
+<br>
+
+ارزش دلار:
+$0
+
+</div>
+
+
+<div class="coin" onclick="openCoin('LTC')">
+
+<h3>⚡ Litecoin LTC</h3>
+
+موجودی:
+0.000000 LTC
+
+<br>
+
+ارزش دلار:
+$0
+
+</div>
+`
+);
+
+</script>
 </body>
 </html>
