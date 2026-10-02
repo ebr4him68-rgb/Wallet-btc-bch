@@ -3446,4 +3446,40 @@ if ("serviceWorker" in navigator) {
 
 }
 </script>
+<!-- SOCIAL ICONS FOOTER -->
+
+<div style="
+width:100%;
+text-align:center;
+padding:20px 0;
+margin-top:30px;
+direction:rtl;
+">
+
+<div style="
+display:flex;
+justify-content:center;
+gap:20px;
+align-items:center;
+">
+
+<img src="https://cdn.simpleicons.org/telegram" 
+width="40" height="40"
+alt="Telegram">
+
+<img src="https://cdn.simpleicons.org/youtube" 
+width="40" height="40"
+alt="YouTube">
+
+<img src="https://cdn.simpleicons.org/whatsapp" 
+width="40" height="40"
+alt="WhatsApp">
+
+<img src="https://cdn.simpleicons.org/gmail" 
+width="40" height="40"
+alt="Gmail">
+
+</div>
+
+</div>
 </body>
