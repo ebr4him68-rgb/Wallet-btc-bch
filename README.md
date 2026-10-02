@@ -3463,22 +3463,6 @@ gap:20px;
 align-items:center;
 ">
 
-<img src="https://cdn.simpleicons.org/telegram" 
-width="40" height="40"
-alt="Telegram">
-
-<img src="https://cdn.simpleicons.org/youtube" 
-width="40" height="40"
-alt="YouTube">
-
-<img src="https://cdn.simpleicons.org/whatsapp" 
-width="40" height="40"
-alt="WhatsApp">
-
-<img src="https://cdn.simpleicons.org/gmail" 
-width="40" height="40"
-alt="Gmail">
-
 </div>
 
 </div>
