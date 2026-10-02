@@ -1,73 +1,69 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 
-<title>BTC BCH</title>
+<title>BTC BCH Exchange</title>
 
 <style>
 
 body{
 margin:0;
 font-family:tahoma;
-background:#079447;
-color:white;
+background:linear-gradient(#ffd900,#08a34a);
 }
 
 .app{
-max-width:480px;
+max-width:460px;
 margin:auto;
 padding:15px;
 text-align:center;
 }
 
-.card{
+.panel{
 background:white;
-color:#111;
 border-radius:25px;
 padding:20px;
 margin:15px 0;
-box-shadow:0 5px 20px #005b2b;
-}
-
-
-.logo{
-font-size:50px;
+box-shadow:0 5px 20px #555;
 }
 
 
 .coin{
 background:#111;
 color:white;
-padding:12px;
-border-radius:15px;
+border-radius:20px;
+padding:15px;
 margin:10px;
 }
 
 
-.dot{
-width:12px;
-height:12px;
-background:#00ff66;
-border-radius:50%;
-display:inline-block;
-animation:blink 1s infinite;
+.logo{
+font-size:45px;
 }
 
 
-@keyframes blink{
+.blink{
+width:12px;
+height:12px;
+background:#00ff4c;
+display:inline-block;
+border-radius:50%;
+animation:x 1s infinite;
+}
+
+@keyframes x{
 50%{opacity:.2}
 }
 
 
 input,select{
 width:90%;
-padding:13px;
+padding:14px;
 margin:8px;
-border-radius:12px;
-border:1px solid #ccc;
+border-radius:15px;
+border:1px solid #aaa;
 }
 
 
@@ -75,29 +71,23 @@ button{
 background:#079447;
 color:white;
 border:0;
-padding:12px 25px;
+padding:14px 25px;
 border-radius:15px;
 }
 
 
 .address{
 background:#eee;
-padding:10px;
+padding:12px;
+border-radius:10px;
 font-size:12px;
 word-break:break-all;
-border-radius:10px;
 }
 
 
-.row{
-display:flex;
-gap:10px;
+.hide{
+display:none;
 }
-
-.box{
-width:50%;
-}
-
 
 </style>
 
@@ -110,54 +100,41 @@ width:50%;
 <div class="app">
 
 
-<div class="logo">
-🟠🟢 ◉
-</div>
-
-
 <h1>
-WALLET BTC BCH
+🟠₿ 🟢 Wallet Exchange
 </h1>
 
 
-<h2>
-BTC / BCH / USDT
-</h2>
 
-
-
-<div class="card">
-
-
-<h3>
-قیمت آنلاین
-</h3>
+<div class="panel">
 
 
 <div class="coin">
+
 🟠 Bitcoin
-<span class="dot"></span>
+<span class="blink"></span>
+
 <br>
+
 <span id="btcPrice">
-Loading...
+درحال قیمت...
 </span>
+
 </div>
 
 
+
 <div class="coin">
+
 🟢 Bitcoin Cash
-<span class="dot"></span>
+<span class="blink"></span>
+
 <br>
+
 <span id="bchPrice">
-Loading...
+درحال قیمت...
 </span>
-</div>
 
-
-<div class="coin">
-BALANCE USDT
-<br>
-1 USD
 </div>
 
 
@@ -167,100 +144,56 @@ BALANCE USDT
 
 
 
-<div class="card">
+<div class="panel">
 
 
 <h2>
-📥 دریافت ارز
+موجودی
+</h2>
+
+
+<p>
+🟠 BTC :
+<b>0.000000000</b>
+</p>
+
+
+<p>
+🟢 BCH :
+<b>0.000000000</b>
+</p>
+
+
+<h2>
+💵 0.00 USD
+</h2>
+
+
+</div>
+
+
+
+
+
+
+
+<div class="panel">
+
+
+<h2>
+معامله
 </h2>
 
 
 
-<div class="row">
-
-
-<div class="box">
-
-<h3>
-🟠 BTC
-</h3>
-
-
-<div class="address">
-
-1Q99GpYnEU9yELNLjiJUWopNT1HatRYQrV
-
-</div>
-
-
-<button onclick="copyBTC()">
-کپی
-</button>
-
-
-</div>
-
-
-
-
-
-<div class="box">
-
-
-<h3>
-🟢 BCH
-</h3>
-
-
-<div class="address">
-
-bitcoincash:qrj64uh0xlah2wzksudq3g5eeg2ewdyg6urq5kywku
-
-</div>
-
-
-<button onclick="copyBCH()">
-کپی
-</button>
-
-
-</div>
-
-
-</div>
-
-
-</div>
-
-
-
-
-
-
-
-<div class="card">
-
-
-<h2>
-📤 ارسال ارز
-</h2>
-
-
-
-<select id="sendCoin">
+<select id="coin">
 
 <option value="btc">
 Bitcoin BTC
 </option>
 
-
 <option value="bch">
 Bitcoin Cash BCH
-</option>
-
-
-<option value="usdt">
-USDT
 </option>
 
 
@@ -268,25 +201,40 @@ USDT
 
 
 
-<input id="amount"
-placeholder="مقدار ارز">
+
+<select id="action" onchange="changeAction()">
+
+<option value="receive">
+دریافت
+</option>
+
+<option value="send">
+ارسال
+</option>
+
+</select>
 
 
 
-<p id="convert">
-ارزش تقریبی: 0.00 USD
-</p>
+
+<div id="receive">
 
 
+<h3>
+آدرس دریافت
+</h3>
 
-<input placeholder="آدرس مقصد">
+
+<div class="address" id="receiveAddress">
+
+انتخاب ارز
+
+</div>
 
 
-
-<button onclick="requestSend()">
-ثبت ارسال
+<button onclick="copyAddress()">
+کپی آدرس
 </button>
-
 
 
 </div>
@@ -295,7 +243,40 @@ placeholder="مقدار ارز">
 
 
 
-<div class="card">
+
+
+<div id="send" class="hide">
+
+
+<h3>
+مقدار ارسال
+</h3>
+
+
+<input id="amount" placeholder="مقدار ارز">
+
+
+<p id="usd">
+ارزش دلار: 0.00 USD
+</p>
+
+
+
+<h3>
+آدرس مقصد
+</h3>
+
+
+<input placeholder="آدرس کاربر">
+
+
+<button>
+ثبت ارسال
+</button>
+
+
+</div>
+
 
 
 </div>
@@ -316,10 +297,7 @@ let BCH=0;
 
 
 
-async function prices(){
-
-
-try{
+async function price(){
 
 
 let r=await fetch(
@@ -337,6 +315,7 @@ BTC=d.bitcoin.usd;
 BCH=d["bitcoin-cash"].usd;
 
 
+
 btcPrice.innerHTML=
 BTC+" USD";
 
@@ -347,18 +326,72 @@ BCH+" USD";
 
 }
 
-catch(e){}
 
+price();
+
+setInterval(price,60000);
+
+
+
+
+
+
+function changeAction(){
+
+
+if(action.value=="send"){
+
+receive.classList.add("hide");
+
+send.classList.remove("hide");
+
+
+}else{
+
+
+send.classList.add("hide");
+
+receive.classList.remove("hide");
+
+showAddress();
+
+}
 
 
 }
 
 
-prices();
-
-setInterval(prices,60000);
 
 
+
+coin.onchange=function(){
+
+showAddress();
+
+}
+
+
+
+
+
+function showAddress(){
+
+
+if(coin.value=="btc"){
+
+receiveAddress.innerHTML=
+"1Q99GpYnEU9yELNLjiJUWopNT1HatRYQrV";
+
+}else{
+
+
+receiveAddress.innerHTML=
+"bitcoincash:qrj64uh0xlah2wzksudq3g5eeg2ewdyg6urq5kywku";
+
+}
+
+
+}
 
 
 
@@ -366,29 +399,23 @@ setInterval(prices,60000);
 amount.oninput=function(){
 
 
-let v=Number(this.value);
-
-let c=sendCoin.value;
+let v=Number(amount.value);
 
 
 let usd=0;
 
 
-if(c=="btc")
+if(coin.value=="btc")
 usd=v*BTC;
 
 
-if(c=="bch")
+if(coin.value=="bch")
 usd=v*BCH;
 
 
-if(c=="usdt")
-usd=v;
 
-
-convert.innerHTML=
-"ارزش تقریبی: "+
-usd.toFixed(2)+" USD";
+document.getElementById("usd").innerHTML=
+"ارزش دلار: "+usd.toFixed(2)+" USD";
 
 
 }
@@ -397,37 +424,22 @@ usd.toFixed(2)+" USD";
 
 
 
-function copyBTC(){
+function copyAddress(){
+
 
 navigator.clipboard.writeText(
-"1Q99GpYnEU9yELNLjiJUWopNT1HatRYQrV"
+receiveAddress.innerText
 );
 
-alert("BTC کپی شد");
+
+alert("آدرس کپی شد");
+
 
 }
 
 
 
-function copyBCH(){
-
-navigator.clipboard.writeText(
-"bitcoincash:qrj64uh0xlah2wzksudq3g5eeg2ewdyg6urq5kywku"
-);
-
-alert("BCH کپی شد");
-
-}
-
-
-
-
-function requestSend(){
-
-alert("درخواست ارسال ثبت شد");
-
-}
-
+showAddress();
 
 
 </script>
