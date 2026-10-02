@@ -1,1 +1,436 @@
 
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<title>Wallet BTC BCH</title>
+
+<style>
+
+body{
+margin:0;
+font-family:tahoma;
+background:#ffd900;
+color:#111;
+}
+
+.app{
+max-width:450px;
+margin:auto;
+padding:15px;
+text-align:center;
+}
+
+.card{
+background:white;
+border-radius:25px;
+padding:20px;
+margin:15px 0;
+box-shadow:0 5px 20px #b89500;
+}
+
+.logo{
+font-size:45px;
+}
+
+input,select{
+width:90%;
+padding:13px;
+margin:7px;
+border-radius:12px;
+border:1px solid #ccc;
+}
+
+button{
+padding:13px 25px;
+border:0;
+border-radius:15px;
+background:#111;
+color:white;
+}
+
+.price{
+background:#111;
+color:white;
+border-radius:15px;
+padding:12px;
+margin:10px;
+}
+
+.dot{
+display:inline-block;
+width:12px;
+height:12px;
+background:#00ff55;
+border-radius:50%;
+animation:blink 1s infinite;
+}
+
+@keyframes blink{
+50%{opacity:.2}
+}
+
+#wallet{
+display:none;
+}
+
+.address{
+font-size:12px;
+background:#eee;
+padding:10px;
+border-radius:10px;
+word-break:break-all;
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div class="app">
+
+
+<div class="logo">
+🟠₿ 🟢
+</div>
+
+<h1>Wallet BTC BCH</h1>
+
+
+<div class="card">
+
+<h3>قیمت آنلاین</h3>
+
+<div class="price">
+🟠 Bitcoin
+<span class="dot"></span>
+<br>
+<span id="btcPrice">...</span>
+</div>
+
+
+<div class="price">
+🟢 Bitcoin Cash
+<span class="dot"></span>
+<br>
+<span id="bchPrice">...</span>
+</div>
+
+
+</div>
+
+
+
+<div id="login" class="card">
+
+<h2>ورود به کیف</h2>
+
+<input id="email" placeholder="ایمیل">
+
+<input id="pass" type="password" placeholder="رمز">
+
+
+<button onclick="login()">
+ورود
+</button>
+
+</div>
+
+
+
+
+
+<div id="wallet">
+
+
+<div class="card">
+
+<h2>
+کیف من
+</h2>
+
+<p id="user"></p>
+
+
+<h1 id="usd">
+0.00 USD
+</h1>
+
+
+<p>
+موجودی کل
+</p>
+
+
+<p>
+🟠 BTC :
+<span id="btcBalance">0</span>
+</p>
+
+
+<p>
+🟢 BCH :
+<span id="bchBalance">0</span>
+</p>
+
+
+</div>
+
+
+
+
+
+<div class="card">
+
+<h2>📥 دریافت</h2>
+
+
+<p>BTC</p>
+
+<div class="address">
+1Q99GpYnEU9yELNLjiJUWopNT1HatRYQrV
+</div>
+
+
+<button onclick="copyBTC()">
+کپی BTC
+</button>
+
+
+
+<p>BCH</p>
+
+<div class="address">
+bitcoincash:qrj64uh0xlah2wzksudq3g5eeg2ewdyg6urq5kywku
+</div>
+
+
+<button onclick="copyBCH()">
+کپی BCH
+</button>
+
+
+</div>
+
+
+
+
+
+<div class="card">
+
+<h2>📤 ارسال</h2>
+
+
+<select id="coin">
+
+<option value="btc">
+Bitcoin
+</option>
+
+<option value="bch">
+Bitcoin Cash
+</option>
+
+</select>
+
+
+<input id="amount" placeholder="مقدار">
+
+
+<p id="convert">
+0.00 USD
+</p>
+
+
+<button>
+ارسال
+</button>
+
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+
+
+<script>
+
+
+let BTC=0;
+let BCH=0;
+
+
+let userBTC=0;
+let userBCH=0;
+
+
+
+function login(){
+
+
+let e=email.value;
+let p=pass.value;
+
+
+if(!e || !p){
+alert("اطلاعات را وارد کنید");
+return;
+}
+
+
+localStorage.setItem("user",e);
+
+
+document.getElementById("login").style.display="none";
+
+document.getElementById("wallet").style.display="block";
+
+
+user.innerHTML=e;
+
+
+loadBalance();
+
+
+}
+
+
+
+function loadBalance(){
+
+userBTC=
+Number(localStorage.getItem("btc")||0);
+
+
+userBCH=
+Number(localStorage.getItem("bch")||0);
+
+
+updateBalance();
+
+}
+
+
+
+
+function updateBalance(){
+
+btcBalance.innerHTML=userBTC;
+
+bchBalance.innerHTML=userBCH;
+
+
+usd.innerHTML=
+(
+(userBTC*BTC)+(userBCH*BCH)
+).toFixed(2)
++" USD";
+
+
+}
+
+
+
+
+async function prices(){
+
+
+let r=await fetch(
+"https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,bitcoin-cash&vs_currencies=usd"
+);
+
+
+let d=await r.json();
+
+
+BTC=d.bitcoin.usd;
+
+BCH=d["bitcoin-cash"].usd;
+
+
+btcPrice.innerHTML=BTC+" USD";
+
+bchPrice.innerHTML=BCH+" USD";
+
+
+updateBalance();
+
+
+}
+
+
+
+prices();
+
+setInterval(prices,60000);
+
+
+
+
+
+amount.oninput=function(){
+
+
+let v=Number(this.value);
+
+let c=coin.value;
+
+
+let usd=0;
+
+
+if(c=="btc")
+usd=v*BTC;
+
+
+if(c=="bch")
+usd=v*BCH;
+
+
+convert.innerHTML=
+usd.toFixed(2)+" USD";
+
+
+}
+
+
+
+
+function copyBTC(){
+
+navigator.clipboard.writeText(
+"1Q99GpYnEU9yELNLjiJUWopNT1HatRYQrV"
+);
+
+alert("کپی شد");
+
+}
+
+
+
+function copyBCH(){
+
+navigator.clipboard.writeText(
+"bitcoincash:qrj64uh0xlah2wzksudq3g5eeg2ewdyg6urq5kywku"
+);
+
+alert("کپی شد");
+
+}
+
+
+</script>
+
+
+</body>
+  </html>
