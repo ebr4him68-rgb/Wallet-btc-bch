@@ -227,7 +227,241 @@ setInterval(price,60000);
 
 
 </script>
+<!-- Crypto Wallet Panel -->
+
+<div class="card">
+
+<h2>💰 Wallet Crypto</h2>
 
 
+<div class="coin">
+🟠 Bitcoin (BTC)
+<span class="online"></span>
+<br>
+<b id="btcPrice">Loading...</b>
+</div>
+
+
+<div class="coin">
+🟢 Bitcoin Cash (BCH)
+<span class="online"></span>
+<br>
+<b id="bchPrice">Loading...</b>
+</div>
+
+
+<div class="coin">
+⚡ Litecoin (LTC)
+<span class="online"></span>
+<br>
+<b id="ltcPrice">Loading...</b>
+</div>
+
+
+
+<hr>
+
+
+<h3>📥 دریافت ارز</h3>
+
+
+<p>BTC Address</p>
+<input id="btcAddr"
+value="1Q99GpYnEU9yELNLjiJUWopNT1HatRYQrV"
+readonly>
+
+<button onclick="copyText('btcAddr')">
+کپی BTC
+</button>
+
+
+
+<p>BCH Address</p>
+
+<input id="bchAddr"
+value="bitcoincash:qrj64uh0xlah2wzksudq3g5eeg2ewdyg6urq5kywku"
+readonly>
+
+<button onclick="copyText('bchAddr')">
+کپی BCH
+</button>
+
+
+
+<p>LTC Address</p>
+
+<input id="ltcAddr"
+value="آدرس LTC خود را وارد کنید"
+readonly>
+
+<button onclick="copyText('ltcAddr')">
+کپی LTC
+</button>
+
+
+
+<hr>
+
+
+<h3>📤 ارسال ارز</h3>
+
+
+<select id="coinSelect">
+<option value="btc">Bitcoin BTC</option>
+<option value="bch">Bitcoin Cash BCH</option>
+<option value="ltc">Litecoin LTC</option>
+</select>
+
+
+<br><br>
+
+
+<input id="amount"
+placeholder="مقدار ارز">
+
+
+<p id="result">
+ارزش تقریبی: 0 USD
+</p>
+
+
+</div>
+
+
+
+<style>
+
+.online{
+
+display:inline-block;
+width:12px;
+height:12px;
+background:#00ff66;
+border-radius:50%;
+animation:flash 1s infinite;
+
+}
+
+
+@keyframes flash{
+
+50%{
+opacity:.2;
+}
+
+}
+
+</style>
+
+
+
+<script>
+
+let BTC=0;
+let BCH=0;
+let LTC=0;
+
+
+
+async function getPrices(){
+
+try{
+
+
+let r=await fetch(
+"https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,bitcoin-cash,litecoin&vs_currencies=usd"
+);
+
+
+let d=await r.json();
+
+
+BTC=d.bitcoin.usd;
+BCH=d["bitcoin-cash"].usd;
+LTC=d.litecoin.usd;
+
+
+
+btcPrice.innerHTML=BTC+" USD";
+
+bchPrice.innerHTML=BCH+" USD";
+
+ltcPrice.innerHTML=LTC+" USD";
+
+
+
+}catch(e){}
+
+
+
+}
+
+
+
+getPrices();
+
+setInterval(getPrices,60000);
+
+
+
+
+
+function copyText(id){
+
+navigator.clipboard.writeText(
+document.getElementById(id).value
+);
+
+alert("آدرس کپی شد");
+
+}
+
+
+
+
+
+amount.oninput=function(){
+
+
+let coin=coinSelect.value;
+
+let price=0;
+
+
+if(coin=="btc"){
+price=BTC;
+}
+
+
+if(coin=="bch"){
+price=BCH;
+}
+
+
+if(coin=="ltc"){
+price=LTC;
+}
+
+
+
+result.innerHTML=
+"ارزش تقریبی: "+
+(Number(this.value)*price).toFixed(2)
++" USD";
+
+
+}
+
+
+
+coinSelect.onchange=function(){
+
+amount.dispatchEvent(new Event("input"));
+
+}
+
+
+
+</script>
 </body>
 </html>
