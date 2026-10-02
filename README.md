@@ -2,7 +2,8 @@
 <html lang="fa" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0"
+
 <title>My Crypto Wallet</title>
 
 <style>
@@ -3465,5 +3466,28 @@ align-items:center;
 
 </div>
 
+</div>
+<!-- Wallet PWA Footer Check -->
+<script>
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", function () {
+    navigator.serviceWorker.register("service-worker.js")
+    .then(function () {
+      console.log("Wallet Service Worker فعال شد");
+    })
+    .catch(function (error) {
+      console.log("خطای Service Worker:", error);
+    });
+  });
+}
+</script>
+
+<div style="
+text-align:center;
+padding:15px;
+font-size:14px;
+opacity:.8;
+">
+My Crypto Wallet BTC / BCH
 </div>
 </body>
