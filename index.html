@@ -400,4 +400,29 @@ usd=v*BCH;
 convert.innerHTML=
 usd.toFixed(2)+" USD";
 
+// حفظ ورود کاربر بعد از رفرش
 
+window.onload = function(){
+
+let savedUser = localStorage.getItem("user");
+
+
+if(savedUser){
+
+document.getElementById("login").style.display="none";
+
+document.getElementById("wallet").style.display="block";
+
+
+document.getElementById("user").innerHTML =
+savedUser;
+
+}
+
+  }function logout(){
+
+localStorage.removeItem("user");
+
+location.reload();
+
+  }
