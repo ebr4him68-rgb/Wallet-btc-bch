@@ -3449,33 +3449,6 @@ if ("serviceWorker" in navigator) {
 </script>
 <!-- SOCIAL ICONS FOOTER -->
 
-<div style="
-width:100%;
-text-align:center;
-padding:20px 0;
-margin-top:30px;
-direction:rtl;
-">
-
-<div style="
-display:flex;
-justify-content:center;
-gap:20px;
-align-items:center;
-">
-
-</div><div style="
-background:#111;
-color:#fff;
-padding:30px;
-text-align:center;
-font-size:24px;
-border-radius:15px;
-margin:20px;
-">
-✅ Wallet BTC / BCH is online
-</div>
-">
 </div>
 
 </body>
