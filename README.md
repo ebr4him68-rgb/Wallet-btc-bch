@@ -3464,30 +3464,18 @@ gap:20px;
 align-items:center;
 ">
 
-</div>
-
-</div>
-<!-- Wallet PWA Footer Check -->
-<script>
-if ("serviceWorker" in navigator) {
-  window.addEventListener("load", function () {
-    navigator.serviceWorker.register("service-worker.js")
-    .then(function () {
-      console.log("Wallet Service Worker فعال شد");
-    })
-    .catch(function (error) {
-      console.log("خطای Service Worker:", error);
-    });
-  });
-}
-</script>
-
-<div style="
+</div><div style="
+background:#111;
+color:#fff;
+padding:30px;
 text-align:center;
-padding:15px;
-font-size:14px;
-opacity:.8;
+font-size:24px;
+border-radius:15px;
+margin:20px;
 ">
-My Crypto Wallet BTC / BCH
+✅ Wallet BTC / BCH is online
 </div>
+">
+</div>
+
 </body>
