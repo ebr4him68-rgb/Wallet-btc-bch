@@ -344,48 +344,6 @@ localStorage.removeItem("walletUser");
 
 location.reload();
 
-}
-
-
-
-
-function changePass(){
-
-let p=prompt("رمز جدید");
-
-if(p){
-localStorage.setItem("walletPass",p);
-alert("تغییر کرد");
-}
-
-}
-
-
-
-
-function admin(){
-
-let p=prompt("رمز مدیر");
-
-if(p=="Admin321"){
-alert("پنل مدیر");
-}else{
-alert("اشتباه");
-}
-
-}
-
-
-
-
-function showMsg(){
-
-alert("پیام تراکنش‌ها");
-
-}
-
-
-
 
 async function getPrice(){
 
