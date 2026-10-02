@@ -1,210 +1,238 @@
-
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 
-<title>Wallet BTC BCH</title>
+<title>Crypto Exchange BTC BCH</title>
 
 <style>
+
 body{
 margin:0;
 font-family:tahoma;
-background:#ffd900;
-color:#111;
+background:#079447;
+color:white;
 }
 
 .app{
-max-width:450px;
+max-width:480px;
 margin:auto;
 padding:15px;
 text-align:center;
 }
 
 .card{
-background:#fff;
+background:white;
+color:#111;
 border-radius:25px;
 padding:20px;
 margin:15px 0;
-box-shadow:0 5px 20px #b28f00;
+box-shadow:0 5px 20px #005b2b;
 }
 
+
 .logo{
-font-size:45px;
+font-size:50px;
 }
+
+
+.coin{
+background:#111;
+color:white;
+padding:12px;
+border-radius:15px;
+margin:10px;
+}
+
+
+.dot{
+width:12px;
+height:12px;
+background:#00ff66;
+border-radius:50%;
+display:inline-block;
+animation:blink 1s infinite;
+}
+
+
+@keyframes blink{
+50%{opacity:.2}
+}
+
 
 input,select{
 width:90%;
 padding:13px;
-margin:7px;
+margin:8px;
 border-radius:12px;
 border:1px solid #ccc;
 }
 
+
 button{
-background:#111;
+background:#079447;
 color:white;
 border:0;
 padding:12px 25px;
 border-radius:15px;
 }
 
-.price{
-background:#111;
-color:white;
-padding:10px;
-border-radius:15px;
-margin:10px;
-}
-
-.dot{
-width:12px;
-height:12px;
-display:inline-block;
-background:#00ff55;
-border-radius:50%;
-animation:b 1s infinite;
-}
-
-@keyframes b{
-50%{opacity:.2}
-}
-
-#wallet{
-display:none;
-}
 
 .address{
 background:#eee;
 padding:10px;
-border-radius:10px;
-word-break:break-all;
 font-size:12px;
+word-break:break-all;
+border-radius:10px;
 }
 
-.menu{
-display:none;
-position:absolute;
-right:20px;
-top:60px;
-background:white;
-padding:15px;
-border-radius:15px;
+
+.row{
+display:flex;
+gap:10px;
 }
+
+.box{
+width:50%;
+}
+
+
 </style>
 
 </head>
 
+
 <body>
+
 
 <div class="app">
 
 
-<div style="display:flex;justify-content:space-between;font-size:25px">
-<span onclick="showMsg()">✉️</span>
-<span onclick="openMenu()">⚙️</span>
-</div>
-
-
 <div class="logo">
-🟠₿ 🟢
+🟠₿ 🟢 ◉
 </div>
 
-<h1>Wallet BTC BCH</h1>
+
+<h1>
+Crypto Exchange
+</h1>
+
+
+<h2>
+BTC / BCH / USDT
+</h2>
+
 
 
 <div class="card">
 
-<h3>قیمت آنلاین</h3>
 
-<div class="price">
+<h3>
+قیمت آنلاین
+</h3>
+
+
+<div class="coin">
 🟠 Bitcoin
 <span class="dot"></span>
 <br>
-<span id="btc">درحال دریافت...</span>
+<span id="btcPrice">
+Loading...
+</span>
 </div>
 
 
-<div class="price">
+<div class="coin">
 🟢 Bitcoin Cash
 <span class="dot"></span>
 <br>
-<span id="bch">درحال دریافت...</span>
-</div>
-
-</div>
-
-
-
-<div id="login" class="card">
-
-<h2>ورود</h2>
-
-<input id="user" placeholder="نام کاربری">
-
-<input id="pass" type="password" placeholder="رمز">
-
-<button onclick="enter()">
-ورود به کیف
-</button>
-
+<span id="bchPrice">
+Loading...
+</span>
 </div>
 
 
+<div class="coin">
+🟡 USDT
+<br>
+1 USD
+</div>
 
-<div id="wallet">
-
-
-<div class="card">
-
-<h2>کیف من</h2>
-
-<p id="welcome"></p>
-
-<h1 id="balance">
-0.00 USD
-</h1>
-
-<p>موجودی کل</p>
 
 </div>
+
 
 
 
 
 <div class="card">
 
-<h2>📥 دریافت</h2>
+
+<h2>
+📥 دریافت ارز
+</h2>
 
 
-<h3>Bitcoin</h3>
 
-<div class="address" id="btcAddress">
+<div class="row">
+
+
+<div class="box">
+
+<h3>
+🟠 BTC
+</h3>
+
+
+<div class="address">
+
 1Q99GpYnEU9yELNLjiJUWopNT1HatRYQrV
+
 </div>
+
 
 <button onclick="copyBTC()">
-کپی BTC
+کپی
 </button>
 
 
-
-<hr>
-
-
-<h3>Bitcoin Cash</h3>
-
-<div class="address" id="bchAddress">
-bitcoincash:qrj64uh0xlah2wzksudq3g5eeg2ewdyg6urq5kywku
 </div>
+
+
+
+
+
+<div class="box">
+
+
+<h3>
+🟢 BCH
+</h3>
+
+
+<div class="address">
+
+bitcoincash:qrj64uh0xlah2wzksudq3g5eeg2ewdyg6urq5kywku
+
+</div>
+
 
 <button onclick="copyBCH()">
-کپی BCH
+کپی
 </button>
 
 
 </div>
+
+
+</div>
+
+
+</div>
+
+
 
 
 
@@ -212,57 +240,98 @@ bitcoincash:qrj64uh0xlah2wzksudq3g5eeg2ewdyg6urq5kywku
 
 <div class="card">
 
-<h2>📤 ارسال</h2>
 
-<select id="coin">
+<h2>
+📤 ارسال ارز
+</h2>
 
-<option value="btc">Bitcoin</option>
 
-<option value="bch">Bitcoin Cash</option>
+
+<select id="sendCoin">
+
+<option value="btc">
+Bitcoin BTC
+</option>
+
+
+<option value="bch">
+Bitcoin Cash BCH
+</option>
+
+
+<option value="usdt">
+USDT
+</option>
+
 
 </select>
 
 
-<input id="amount" placeholder="مقدار">
+
+<input id="amount"
+placeholder="مقدار ارز">
 
 
-<p id="usd">
-0.00 USD
+
+<p id="convert">
+ارزش تقریبی: 0.00 USD
 </p>
 
 
-<button onclick="send()">
-ثبت درخواست
+
+<input placeholder="آدرس مقصد">
+
+
+
+<button onclick="requestSend()">
+ثبت ارسال
 </button>
+
 
 
 </div>
 
 
-</div>
+
+
+
+<div class="card">
+
+
+<h2>
+🔄 تبدیل ارز
+</h2>
+
+
+<select>
+
+<option>
+BTC به دلار
+</option>
+
+<option>
+BCH به دلار
+</option>
+
+<option>
+BTC به BCH
+</option>
+
+</select>
+
+
+<p>
+نرخ آنلاین فعال است
+</p>
 
 
 </div>
 
 
 
-<div id="menu" class="menu">
-
-<p id="menuUser"></p>
-
-<button onclick="changePass()">
-تغییر رمز
-</button>
-
-<button onclick="admin()">
-Admin
-</button>
-
-<button onclick="logout()">
-خروج
-</button>
-
 </div>
+
+
 
 
 
@@ -274,84 +343,18 @@ let BCH=0;
 
 
 
-function enter(){
+async function prices(){
 
-let u=user.value;
-let p=pass.value;
-
-
-if(!u||!p){
-alert("نام کاربری و رمز را وارد کنید");
-return;
-}
-
-
-localStorage.setItem("walletUser",u);
-localStorage.setItem("walletPass",p);
-
-
-loadWallet();
-
-}
-
-
-
-
-function loadWallet(){
-
-let u=localStorage.getItem("walletUser");
-
-
-if(u){
-
-login.style.display="none";
-
-wallet.style.display="block";
-
-welcome.innerHTML="کاربر: "+u;
-
-}
-
-}
-
-
-
-window.onload=function(){
-
-loadWallet();
-
-}
-
-
-
-
-function openMenu(){
-
-menu.style.display=
-menu.style.display=="block"?"none":"block";
-
-menuUser.innerHTML=
-localStorage.getItem("walletUser")||"";
-
-}
-
-
-
-
-function logout(){
-
-localStorage.removeItem("walletUser");
-
-location.reload();
-
-
-async function getPrice(){
 
 try{
 
+
 let r=await fetch(
+
 "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,bitcoin-cash&vs_currencies=usd"
+
 );
+
 
 let d=await r.json();
 
@@ -361,42 +364,59 @@ BTC=d.bitcoin.usd;
 BCH=d["bitcoin-cash"].usd;
 
 
-btc.innerHTML=BTC+" USD";
+btcPrice.innerHTML=
+BTC+" USD";
 
-bch.innerHTML=BCH+" USD";
+
+bchPrice.innerHTML=
+BCH+" USD";
 
 
-}catch(e){}
+}
+
+catch(e){}
+
+
 
 }
 
 
-getPrice();
+prices();
 
-setInterval(getPrice,60000);
+setInterval(prices,60000);
+
+
 
 
 
 
 amount.oninput=function(){
 
+
 let v=Number(this.value);
 
-let c=coin.value;
+let c=sendCoin.value;
 
-let total=0;
+
+let usd=0;
 
 
 if(c=="btc")
-total=v*BTC;
+usd=v*BTC;
 
 
 if(c=="bch")
-total=v*BCH;
+usd=v*BCH;
 
 
-usd.innerHTML=
-total.toFixed(2)+" USD";
+if(c=="usdt")
+usd=v;
+
+
+convert.innerHTML=
+"ارزش تقریبی: "+
+usd.toFixed(2)+" USD";
+
 
 }
 
@@ -406,7 +426,9 @@ total.toFixed(2)+" USD";
 
 function copyBTC(){
 
-navigator.clipboard.writeText(btcAddress.innerText);
+navigator.clipboard.writeText(
+"1Q99GpYnEU9yELNLjiJUWopNT1HatRYQrV"
+);
 
 alert("BTC کپی شد");
 
@@ -416,7 +438,9 @@ alert("BTC کپی شد");
 
 function copyBCH(){
 
-navigator.clipboard.writeText(bchAddress.innerText);
+navigator.clipboard.writeText(
+"bitcoincash:qrj64uh0xlah2wzksudq3g5eeg2ewdyg6urq5kywku"
+);
 
 alert("BCH کپی شد");
 
@@ -424,14 +448,17 @@ alert("BCH کپی شد");
 
 
 
-function send(){
+
+function requestSend(){
 
 alert("درخواست ارسال ثبت شد");
 
 }
 
 
+
 </script>
+
 
 </body>
   </html>
