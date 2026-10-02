@@ -2,276 +2,184 @@
 <html lang="fa" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-
-<title>BTC BCH Exchange</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Crypto Wallet</title>
 
 <style>
-
 body{
-margin:0;
+background:#111;
+color:white;
 font-family:tahoma;
-background:linear-gradient(#ffd900,#08a34a);
+margin:0;
 }
 
-.app{
-max-width:460px;
-margin:auto;
+.header{
+background:#000;
 padding:15px;
 text-align:center;
 }
 
-.panel{
-background:white;
-border-radius:25px;
-padding:20px;
-margin:15px 0;
-box-shadow:0 5px 20px #555;
+.price{
+display:flex;
+gap:10px;
+justify-content:center;
 }
 
+.box{
+background:#222;
+padding:10px;
+border-radius:15px;
+}
+
+.btc{color:orange}
+.bch{color:#00d26a}
+
+.wallet{
+padding:20px;
+}
 
 .coin{
-background:#111;
-color:white;
-border-radius:20px;
+background:#222;
 padding:15px;
-margin:10px;
+border-radius:20px;
+margin:15px 0;
+cursor:pointer;
 }
 
-
-.logo{
-font-size:45px;
+.coin:hover{
+background:#333;
 }
-
-
-.blink{
-width:12px;
-height:12px;
-background:#00ff4c;
-display:inline-block;
-border-radius:50%;
-animation:x 1s infinite;
-}
-
-@keyframes x{
-50%{opacity:.2}
-}
-
-
-input,select{
-width:90%;
-padding:14px;
-margin:8px;
-border-radius:15px;
-border:1px solid #aaa;
-}
-
 
 button{
-background:#079447;
-color:white;
+padding:12px;
 border:0;
-padding:14px 25px;
 border-radius:15px;
+margin:5px;
+background:#ffb000;
+font-weight:bold;
 }
 
+.panel{
+display:none;
+background:#1b1b1b;
+padding:20px;
+border-radius:20px;
+}
 
-.address{
-background:#eee;
+input{
+width:90%;
 padding:12px;
 border-radius:10px;
-font-size:12px;
+margin:5px;
+}
+
+.address{
+background:#000;
+padding:10px;
 word-break:break-all;
+border-radius:10px;
 }
-
-
-.hide{
-display:none;
-}
-
 </style>
 
 </head>
 
-
 <body>
 
 
-<div class="app">
+<div class="header">
+
+<h2>💰 Crypto Wallet</h2>
+
+<div class="price">
+
+<div class="box btc">
+BTC<br>
+<span id="btcPrice">Loading...</span>
+</div>
+
+<div class="box bch">
+BCH<br>
+<span id="bchPrice">Loading...</span>
+</div>
+
+</div>
+
+</div>
 
 
-<h1>
-🟠₿ 🟢 Wallet Exchange
-</h1>
+<div class="wallet">
 
 
+<div class="coin" onclick="openCoin('BTC')">
 
-<div class="panel">
+<h3>🟠 Bitcoin BTC</h3>
 
-
-<div class="coin">
-
-🟠 Bitcoin
-<span class="blink"></span>
+موجودی:
+0.000000 BTC
 
 <br>
 
-<span id="btcPrice">
-درحال قیمت...
-</span>
+ارزش دلار:
+$0
 
 </div>
 
 
 
-<div class="coin">
+<div class="coin" onclick="openCoin('BCH')">
 
-🟢 Bitcoin Cash
-<span class="blink"></span>
+<h3>🟢 Bitcoin Cash BCH</h3>
+
+موجودی:
+0.000000 BCH
 
 <br>
 
-<span id="bchPrice">
-درحال قیمت...
-</span>
-
-</div>
-
-
-</div>
-
-
-
-
-
-<div class="panel">
-
-
-<h2>
-موجودی
-</h2>
-
-
-<p>
-🟠 BTC :
-<b>0.000000000</b>
-</p>
-
-
-<p>
-🟢 BCH :
-<b>0.000000000</b>
-</p>
-
-
-<h2>
-💵 0.00 USD
-</h2>
-
+ارزش دلار:
+$0
 
 </div>
 
 
 
+<div id="panel" class="panel">
+
+<h2 id="name"></h2>
 
 
+<h3>آدرس دریافت</h3>
+
+<div class="address" id="address"></div>
 
 
-<div class="panel">
+<br>
+
+<button onclick="copyAddress()">کپی آدرس</button>
 
 
-<h2>
-معامله
-</h2>
+<hr>
 
 
+<h3>ارسال</h3>
 
-<select id="coin">
-
-<option value="btc">
-Bitcoin BTC
-</option>
-
-<option value="bch">
-Bitcoin Cash BCH
-</option>
+<input placeholder="مقدار ارسال">
 
 
-</select>
-
-
-
-
-<select id="action" onchange="changeAction()">
-
-<option value="receive">
-دریافت
-</option>
-
-<option value="send">
-ارسال
-</option>
-
-</select>
-
-
-
-
-<div id="receive">
-
-
-<h3>
-آدرس دریافت
-</h3>
-
-
-<div class="address" id="receiveAddress">
-
-انتخاب ارز
-
-</div>
-
-
-<button onclick="copyAddress()">
-کپی آدرس
-</button>
-
-
-</div>
-
-
-
-
-
-
-
-<div id="send" class="hide">
-
-
-<h3>
-مقدار ارسال
-</h3>
-
-
-<input id="amount" placeholder="مقدار ارز">
-
-
-<p id="usd">
-ارزش دلار: 0.00 USD
-</p>
-
-
-
-<h3>
-آدرس مقصد
-</h3>
-
-
-<input placeholder="آدرس کاربر">
+<input placeholder="آدرس مقصد">
 
 
 <button>
-ثبت ارسال
+ارسال تراکنش
+</button>
+
+
+<h3>دریافت</h3>
+
+<input placeholder="مبلغ دریافت">
+
+
+<button>
+ساخت درخواست دریافت
 </button>
 
 
@@ -280,170 +188,98 @@ Bitcoin Cash BCH
 
 
 </div>
-
-
-
-</div>
-
-
 
 
 
 <script>
 
 
-let BTC=0;
-let BCH=0;
+let currentAddress="";
+
+
+let coins={
+
+BTC:{
+name:"Bitcoin BTC",
+address:"1Q99GpYnEU9yELNLjiJUWopNT1HatRYQrV"
+},
+
+
+BCH:{
+name:"Bitcoin Cash BCH",
+address:"bitcoincash:qrj64uh0xlah2wzksudq3g5eeg2ewdyg6urq5kywku"
+}
+
+};
 
 
 
-async function price(){
+function openCoin(c){
 
+document.getElementById("panel").style.display="block";
+
+document.getElementById("name").innerHTML=coins[c].name;
+
+document.getElementById("address").innerHTML=coins[c].address;
+
+currentAddress=coins[c].address;
+
+}
+
+
+
+function copyAddress(){
+
+navigator.clipboard.writeText(currentAddress);
+
+alert("آدرس کپی شد");
+
+}
+
+
+
+// قیمت زنده
+
+async function prices(){
+
+try{
 
 let r=await fetch(
-
 "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,bitcoin-cash&vs_currencies=usd"
-
 );
 
 
 let d=await r.json();
 
 
-BTC=d.bitcoin.usd;
-
-BCH=d["bitcoin-cash"].usd;
-
+document.getElementById("btcPrice").innerHTML=
+"$"+d.bitcoin.usd;
 
 
-btcPrice.innerHTML=
-BTC+" USD";
-
-
-bchPrice.innerHTML=
-BCH+" USD";
+document.getElementById("bchPrice").innerHTML=
+"$"+d["bitcoin-cash"].usd;
 
 
 }
 
+catch(e){
 
-price();
+document.getElementById("btcPrice").innerHTML="Offline";
 
-setInterval(price,60000);
+document.getElementById("bchPrice").innerHTML="Offline";
 
-
-
-
-
-
-function changeAction(){
-
-
-if(action.value=="send"){
-
-receive.classList.add("hide");
-
-send.classList.remove("hide");
-
-
-}else{
-
-
-send.classList.add("hide");
-
-receive.classList.remove("hide");
-
-showAddress();
+}
 
 }
 
 
-}
+prices();
 
-
-
-
-
-coin.onchange=function(){
-
-showAddress();
-
-}
-
-
-
-
-
-function showAddress(){
-
-
-if(coin.value=="btc"){
-
-receiveAddress.innerHTML=
-"1Q99GpYnEU9yELNLjiJUWopNT1HatRYQrV";
-
-}else{
-
-
-receiveAddress.innerHTML=
-"bitcoincash:qrj64uh0xlah2wzksudq3g5eeg2ewdyg6urq5kywku";
-
-}
-
-
-}
-
-
-
-
-amount.oninput=function(){
-
-
-let v=Number(amount.value);
-
-
-let usd=0;
-
-
-if(coin.value=="btc")
-usd=v*BTC;
-
-
-if(coin.value=="bch")
-usd=v*BCH;
-
-
-
-document.getElementById("usd").innerHTML=
-"ارزش دلار: "+usd.toFixed(2)+" USD";
-
-
-}
-
-
-
-
-
-function copyAddress(){
-
-
-navigator.clipboard.writeText(
-receiveAddress.innerText
-);
-
-
-alert("آدرس کپی شد");
-
-
-}
-
-
-
-showAddress();
+setInterval(prices,60000);
 
 
 </script>
 
 
 </body>
-  </html>
+</html>
