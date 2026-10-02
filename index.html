@@ -1,1 +1,479 @@
 
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<title>Wallet BTC BCH</title>
+
+<style>
+body{
+margin:0;
+font-family:tahoma;
+background:#ffd900;
+color:#111;
+}
+
+.app{
+max-width:450px;
+margin:auto;
+padding:15px;
+text-align:center;
+}
+
+.card{
+background:#fff;
+border-radius:25px;
+padding:20px;
+margin:15px 0;
+box-shadow:0 5px 20px #b28f00;
+}
+
+.logo{
+font-size:45px;
+}
+
+input,select{
+width:90%;
+padding:13px;
+margin:7px;
+border-radius:12px;
+border:1px solid #ccc;
+}
+
+button{
+background:#111;
+color:white;
+border:0;
+padding:12px 25px;
+border-radius:15px;
+}
+
+.price{
+background:#111;
+color:white;
+padding:10px;
+border-radius:15px;
+margin:10px;
+}
+
+.dot{
+width:12px;
+height:12px;
+display:inline-block;
+background:#00ff55;
+border-radius:50%;
+animation:b 1s infinite;
+}
+
+@keyframes b{
+50%{opacity:.2}
+}
+
+#wallet{
+display:none;
+}
+
+.address{
+background:#eee;
+padding:10px;
+border-radius:10px;
+word-break:break-all;
+font-size:12px;
+}
+
+.menu{
+display:none;
+position:absolute;
+right:20px;
+top:60px;
+background:white;
+padding:15px;
+border-radius:15px;
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="app">
+
+
+<div style="display:flex;justify-content:space-between;font-size:25px">
+<span onclick="showMsg()">✉️</span>
+<span onclick="openMenu()">⚙️</span>
+</div>
+
+
+<div class="logo">
+🟠₿ 🟢
+</div>
+
+<h1>Wallet BTC BCH</h1>
+
+
+<div class="card">
+
+<h3>قیمت آنلاین</h3>
+
+<div class="price">
+🟠 Bitcoin
+<span class="dot"></span>
+<br>
+<span id="btc">درحال دریافت...</span>
+</div>
+
+
+<div class="price">
+🟢 Bitcoin Cash
+<span class="dot"></span>
+<br>
+<span id="bch">درحال دریافت...</span>
+</div>
+
+</div>
+
+
+
+<div id="login" class="card">
+
+<h2>ورود</h2>
+
+<input id="user" placeholder="نام کاربری">
+
+<input id="pass" type="password" placeholder="رمز">
+
+<button onclick="enter()">
+ورود به کیف
+</button>
+
+</div>
+
+
+
+<div id="wallet">
+
+
+<div class="card">
+
+<h2>کیف من</h2>
+
+<p id="welcome"></p>
+
+<h1 id="balance">
+0.00 USD
+</h1>
+
+<p>موجودی کل</p>
+
+</div>
+
+
+
+
+<div class="card">
+
+<h2>📥 دریافت</h2>
+
+
+<h3>Bitcoin</h3>
+
+<div class="address" id="btcAddress">
+1Q99GpYnEU9yELNLjiJUWopNT1HatRYQrV
+</div>
+
+<button onclick="copyBTC()">
+کپی BTC
+</button>
+
+
+
+<hr>
+
+
+<h3>Bitcoin Cash</h3>
+
+<div class="address" id="bchAddress">
+bitcoincash:qrj64uh0xlah2wzksudq3g5eeg2ewdyg6urq5kywku
+</div>
+
+<button onclick="copyBCH()">
+کپی BCH
+</button>
+
+
+</div>
+
+
+
+
+
+<div class="card">
+
+<h2>📤 ارسال</h2>
+
+<select id="coin">
+
+<option value="btc">Bitcoin</option>
+
+<option value="bch">Bitcoin Cash</option>
+
+</select>
+
+
+<input id="amount" placeholder="مقدار">
+
+
+<p id="usd">
+0.00 USD
+</p>
+
+
+<button onclick="send()">
+ثبت درخواست
+</button>
+
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+
+<div id="menu" class="menu">
+
+<p id="menuUser"></p>
+
+<button onclick="changePass()">
+تغییر رمز
+</button>
+
+<button onclick="admin()">
+Admin
+</button>
+
+<button onclick="logout()">
+خروج
+</button>
+
+</div>
+
+
+
+<script>
+
+
+let BTC=0;
+let BCH=0;
+
+
+
+function enter(){
+
+let u=user.value;
+let p=pass.value;
+
+
+if(!u||!p){
+alert("نام کاربری و رمز را وارد کنید");
+return;
+}
+
+
+localStorage.setItem("walletUser",u);
+localStorage.setItem("walletPass",p);
+
+
+loadWallet();
+
+}
+
+
+
+
+function loadWallet(){
+
+let u=localStorage.getItem("walletUser");
+
+
+if(u){
+
+login.style.display="none";
+
+wallet.style.display="block";
+
+welcome.innerHTML="کاربر: "+u;
+
+}
+
+}
+
+
+
+window.onload=function(){
+
+loadWallet();
+
+}
+
+
+
+
+function openMenu(){
+
+menu.style.display=
+menu.style.display=="block"?"none":"block";
+
+menuUser.innerHTML=
+localStorage.getItem("walletUser")||"";
+
+}
+
+
+
+
+function logout(){
+
+localStorage.removeItem("walletUser");
+
+location.reload();
+
+}
+
+
+
+
+function changePass(){
+
+let p=prompt("رمز جدید");
+
+if(p){
+localStorage.setItem("walletPass",p);
+alert("تغییر کرد");
+}
+
+}
+
+
+
+
+function admin(){
+
+let p=prompt("رمز مدیر");
+
+if(p=="Admin321"){
+alert("پنل مدیر");
+}else{
+alert("اشتباه");
+}
+
+}
+
+
+
+
+function showMsg(){
+
+alert("پیام تراکنش‌ها");
+
+}
+
+
+
+
+async function getPrice(){
+
+try{
+
+let r=await fetch(
+"https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,bitcoin-cash&vs_currencies=usd"
+);
+
+let d=await r.json();
+
+
+BTC=d.bitcoin.usd;
+
+BCH=d["bitcoin-cash"].usd;
+
+
+btc.innerHTML=BTC+" USD";
+
+bch.innerHTML=BCH+" USD";
+
+
+}catch(e){}
+
+}
+
+
+getPrice();
+
+setInterval(getPrice,60000);
+
+
+
+
+amount.oninput=function(){
+
+let v=Number(this.value);
+
+let c=coin.value;
+
+let total=0;
+
+
+if(c=="btc")
+total=v*BTC;
+
+
+if(c=="bch")
+total=v*BCH;
+
+
+usd.innerHTML=
+total.toFixed(2)+" USD";
+
+}
+
+
+
+
+
+function copyBTC(){
+
+navigator.clipboard.writeText(btcAddress.innerText);
+
+alert("BTC کپی شد");
+
+}
+
+
+
+function copyBCH(){
+
+navigator.clipboard.writeText(bchAddress.innerText);
+
+alert("BCH کپی شد");
+
+}
+
+
+
+function send(){
+
+alert("درخواست ارسال ثبت شد");
+
+}
+
+
+</script>
+
+</body>
+  </html>
