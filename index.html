@@ -431,6 +431,150 @@ alert("کپی شد");
 
 </script>
 
+<div class="card">
 
+<h2>💱 پنل دریافت و ارسال</h2>
+
+
+<div style="display:flex;gap:10px;">
+
+
+<div style="width:50%;">
+
+<h3>🟠 Bitcoin</h3>
+
+<button onclick="showBTC()">
+نمایش آدرس BTC
+</button>
+
+
+<p id="btcBox" class="address">
+</p>
+
+
+<button onclick="copyBTC2()">
+کپی BTC
+</button>
+
+
+</div>
+
+
+
+
+<div style="width:50%;">
+
+<h3>🟢 Bitcoin Cash</h3>
+
+
+<button onclick="showBCH()">
+نمایش آدرس BCH
+</button>
+
+
+<p id="bchBox" class="address">
+</p>
+
+
+<button onclick="copyBCH2()">
+کپی BCH
+</button>
+
+
+</div>
+
+
+</div>
+
+
+
+<hr>
+
+
+<h3>📤 ارسال ارز</h3>
+
+
+<select id="sendType">
+
+<option>
+Bitcoin BTC
+</option>
+
+<option>
+Bitcoin Cash BCH
+</option>
+
+</select>
+
+
+<input placeholder="مقدار ارز">
+
+
+<input placeholder="آدرس مقصد">
+
+
+<button onclick="sendCoin()">
+ارسال درخواست
+</button>
+
+
+</div>
+
+
+
+<script>
+
+
+function showBTC(){
+
+document.getElementById("btcBox").innerHTML=
+"1Q99GpYnEU9yELNLjiJUWopNT1HatRYQrV";
+
+}
+
+
+
+function showBCH(){
+
+document.getElementById("bchBox").innerHTML=
+"bitcoincash:qrj64uh0xlah2wzksudq3g5eeg2ewdyg6urq5kywku";
+
+}
+
+
+
+
+function copyBTC2(){
+
+navigator.clipboard.writeText(
+"1Q99GpYnEU9yELNLjiJUWopNT1HatRYQrV"
+);
+
+alert("آدرس BTC کپی شد");
+
+}
+
+
+
+function copyBCH2(){
+
+navigator.clipboard.writeText(
+"bitcoincash:qrj64uh0xlah2wzksudq3g5eeg2ewdyg6urq5kywku"
+);
+
+alert("آدرس BCH کپی شد");
+
+}
+
+
+
+function sendCoin(){
+
+alert("درخواست ارسال ثبت شد");
+
+}
+
+
+  </script>
 </body>
   </html>
