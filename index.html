@@ -23,7 +23,7 @@ padding:20px;
 
 .card{
 background:#171717;
-border-radius:25px;
+border-radius:20px;
 padding:20px;
 margin:15px 0;
 }
@@ -33,21 +33,20 @@ font-size:45px;
 }
 
 input{
-width:90%;
-padding:13px;
-margin:7px;
+width:85%;
+padding:14px;
+margin:8px;
 border-radius:12px;
-border:none;
+border:0;
 font-size:16px;
 }
 
 button{
-padding:12px 25px;
-border:0;
-border-radius:15px;
 background:#f5b700;
+border:0;
+padding:13px 30px;
+border-radius:15px;
 font-size:17px;
-cursor:pointer;
 }
 
 .coin{
@@ -65,25 +64,24 @@ animation:blink 1s infinite;
 }
 
 @keyframes blink{
-50%{opacity:.2}
+50%{opacity:.2;}
 }
 
-.hide{
+#wallet{
 display:none;
-}
-
-.theme button{
-margin:4px;
 }
 
 </style>
 
 </head>
 
-
 <body>
 
+
 <div class="box">
+
+
+<div id="login">
 
 
 <div class="logo">
@@ -95,13 +93,14 @@ margin:4px;
 
 <div class="card">
 
-<h3>قیمت زنده ارزها</h3>
+<h3>قیمت زنده</h3>
+
 
 <div class="coin">
 🟠 Bitcoin
 <span class="dot"></span>
 <br>
-<b id="btc">درحال دریافت...</b>
+<b id="btc">Loading...</b>
 </div>
 
 
@@ -109,59 +108,58 @@ margin:4px;
 🟢 Bitcoin Cash
 <span class="dot"></span>
 <br>
-<b id="bch">درحال دریافت...</b>
+<b id="bch">Loading...</b>
 </div>
 
+
 </div>
 
 
 
-<div class="card" id="loginBox">
+<div class="card">
 
-<h2>ورود / ثبت نام</h2>
+<h2>ورود به کیف</h2>
+
 
 <input id="email" placeholder="ایمیل">
 
-<input id="password" type="password" placeholder="رمز عبور">
+
+<input id="pass" type="password" placeholder="رمز عبور">
+
 
 <br>
 
-<button onclick="login()">
-ورود به کیف
+
+<button onclick="enterWallet()">
+ورود
 </button>
+
+
+</div>
+
 
 </div>
 
 
 
-
-<div class="card hide" id="walletBox">
-
-<h2>🔐 کیف شما</h2>
-
-<p id="showEmail"></p>
-
-<hr>
-
-<h3>تنظیمات</h3>
-
-<input id="oldPass" placeholder="رمز قبلی">
-
-<input id="newPass" placeholder="رمز جدید">
-
-<input id="repeatPass" placeholder="تکرار رمز جدید">
+<div id="wallet">
 
 
-<button onclick="changePassword()">
-تغییر رمز
-</button>
+<div class="logo">
+🔐
+</div>
 
+<h1>Wallet BTC BCH</h1>
 
-<br><br>
+<div class="card">
 
-<button onclick="admin()">
-پنل مدیریت
-</button>
+<h2>ورود موفق</h2>
+
+<p>
+کیف شما آماده است
+</p>
+
+</div>
 
 
 </div>
@@ -174,118 +172,42 @@ margin:4px;
 <script>
 
 
-let emailSave=localStorage.getItem("walletEmail");
-let passSave=localStorage.getItem("walletPass");
-
-
-
-function login(){
+function enterWallet(){
 
 let email=document.getElementById("email").value;
-let pass=document.getElementById("password").value;
+
+let pass=document.getElementById("pass").value;
 
 
 if(email=="" || pass==""){
+
 alert("ایمیل و رمز را وارد کنید");
+
 return;
-}
-
-
-if(!emailSave){
-
-localStorage.setItem("walletEmail",email);
-localStorage.setItem("walletPass",pass);
-
-openWallet();
 
 }
 
-else if(email==emailSave && pass==passSave){
 
-openWallet();
+localStorage.setItem("email",email);
 
-}
 
-else{
+document.getElementById("login").style.display="none";
 
-alert("ایمیل یا رمز اشتباه است");
+document.getElementById("wallet").style.display="block";
 
-}
 
 }
 
 
 
-
-function openWallet(){
-
-document.getElementById("loginBox").style.display="none";
-
-document.getElementById("walletBox").classList.remove("hide");
-
-
-document.getElementById("showEmail").innerHTML=
-"ایمیل: "+localStorage.getItem("walletEmail");
-
-}
-
-
-
-
-function changePassword(){
-
-let old=document.getElementById("oldPass").value;
-
-let n1=document.getElementById("newPass").value;
-
-let n2=document.getElementById("repeatPass").value;
-
-
-if(old==localStorage.getItem("walletPass") && n1==n2 && n1!=""){
-
-localStorage.setItem("walletPass",n1);
-
-alert("رمز تغییر کرد");
-
-}
-
-else{
-
-alert("اطلاعات اشتباه است");
-
-}
-
-}
-
-
-
-function admin(){
-
-let p=prompt("رمز مدیر:");
-
-if(p=="Admin321"){
-
-alert("ورود مدیر موفق شد");
-
-}
-
-else{
-
-alert("رمز اشتباه است");
-
-}
-
-}
-
-
-
-async function prices(){
+async function price(){
 
 try{
 
 let r=await fetch(
 "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,bitcoin-cash&vs_currencies=usd"
 );
+
 
 let d=await r.json();
 
@@ -298,14 +220,22 @@ document.getElementById("bch").innerHTML=
 d["bitcoin-cash"].usd+" USD";
 
 
-}catch(e){}
+}
+
+catch(e){
+
+document.getElementById("btc").innerHTML="خطا";
+
+document.getElementById("bch").innerHTML="خطا";
+
+}
 
 }
 
 
-prices();
+price();
 
-setInterval(prices,60000);
+setInterval(price,60000);
 
 
 </script>
