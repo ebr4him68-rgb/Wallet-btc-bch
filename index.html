@@ -752,5 +752,150 @@ alert("ورود موفق شد");
 }
 
       </script>
+  <style>
+
+.newPrices{
+display:flex;
+gap:8px;
+justify-content:center;
+flex-wrap:wrap;
+margin-top:10px;
+}
+
+.priceCoin{
+background:#222;
+padding:10px;
+border-radius:15px;
+min-width:90px;
+text-align:center;
+font-size:13px;
+}
+
+.priceCoin img{
+width:28px;
+height:28px;
+vertical-align:middle;
+}
+
+.dogeColor{
+color:#d9a441;
+}
+
+.ltcColor{
+color:#aaa;
+}
+
+</style>
+
+
+<script>
+
+
+// پیدا کردن قسمت قیمت بالا
+
+let priceBox=document.querySelector(".price");
+
+
+if(priceBox){
+
+
+priceBox.insertAdjacentHTML(
+"beforeend",
+
+`
+
+<div class="priceCoin dogeColor">
+
+<img src="https://assets.coingecko.com/coins/images/5/large/dogecoin.png">
+
+<br>
+
+🐕 DOGE
+
+<br>
+
+<span id="dogePrice">
+Loading...
+</span>
+
+</div>
+
+
+
+<div class="priceCoin ltcColor">
+
+<img src="https://assets.coingecko.com/coins/images/2/large/litecoin.png">
+
+<br>
+
+⚡ LTC
+
+<br>
+
+<span id="ltcPrice">
+Loading...
+</span>
+
+</div>
+
+
+`
+
+);
+
+
+}
+
+
+
+// دریافت قیمت آنلاین
+
+async function extraPrices(){
+
+
+try{
+
+
+let res=await fetch(
+"https://api.coingecko.com/api/v3/simple/price?ids=dogecoin,litecoin&vs_currencies=usd"
+);
+
+
+let data=await res.json();
+
+
+
+document.getElementById("dogePrice").innerHTML=
+"$"+data.dogecoin.usd;
+
+
+
+document.getElementById("ltcPrice").innerHTML=
+"$"+data.litecoin.usd;
+
+
+
+}catch(e){
+
+
+document.getElementById("dogePrice").innerHTML="Offline";
+
+document.getElementById("ltcPrice").innerHTML="Offline";
+
+
+}
+
+
+}
+
+
+
+extraPrices();
+
+
+setInterval(extraPrices,60000);
+
+
+</script>
 </body>
 </html>
