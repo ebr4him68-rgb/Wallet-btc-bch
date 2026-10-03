@@ -894,6 +894,183 @@ setInterval(showSettingButton,500);
 
 
 </script>
+    <style>
+
+.market-area{
+margin-top:20px;
+text-align:right;
+}
+
+
+.market-btn{
+
+background:#00c853;
+color:white;
+border:0;
+border-radius:20px;
+padding:14px 35px;
+font-size:18px;
+animation:marketBlink 1.2s infinite;
+cursor:pointer;
+
+}
+
+
+@keyframes marketBlink{
+
+0%{
+background:#00c853;
+}
+
+50%{
+background:#ffd600;
+}
+
+100%{
+background:#00c853;
+}
+
+}
+
+
+.market-box{
+
+display:none;
+background:white;
+margin-top:15px;
+border-radius:20px;
+padding:15px;
+max-height:500px;
+overflow:auto;
+
+}
+
+
+.market-item{
+
+display:flex;
+justify-content:space-between;
+padding:12px;
+border-bottom:1px solid #ddd;
+
+}
+
+
+</style>
+
+
+
+<div class="market-area">
+
+<button class="market-btn" onclick="toggleMarket()">
+بازار
+</button>
+
+
+<div id="marketBox" class="market-box">
+
+<h3>
+۱۰۰ ارز برتر بازار
+</h3>
+
+
+<div id="marketList">
+در حال دریافت قیمت...
+</div>
+
+
+</div>
+
+</div>
+
+
+
+<script>
+
+
+function toggleMarket(){
+
+let box=document.getElementById("marketBox");
+
+
+if(box.style.display=="block"){
+
+box.style.display="none";
+
+}
+
+else{
+
+box.style.display="block";
+
+getMarket();
+
+}
+
+
+}
+
+
+
+
+async function getMarket(){
+
+
+try{
+
+
+let r=await fetch(
+"https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1"
+);
+
+
+let coins=await r.json();
+
+
+let html="";
+
+
+coins.forEach((c,i)=>{
+
+
+html+=`
+
+<div class="market-item">
+
+<span>
+${i+1}. ${c.symbol.toUpperCase()}
+</span>
+
+
+<span>
+$${c.current_price.toLocaleString()}
+</span>
+
+
+</div>
+
+`;
+
+});
+
+
+document.getElementById("marketList").innerHTML=html;
+
+
+}
+
+catch{
+
+document.getElementById("marketList").innerHTML=
+"عدم دریافت قیمت";
+
+}
+
+
+}
+
+
+    </script>
 
 
 </body>
