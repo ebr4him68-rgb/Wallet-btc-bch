@@ -111,6 +111,293 @@ border-radius:10px;
 </style>
 
 </head>
+  <style>
+.wallet-app{
+font-family:tahoma;
+background:#111;
+color:white;
+padding:20px;
+border-radius:20px;
+max-width:430px;
+margin:auto;
+box-shadow:0 0 30px #00ff88;
+}
+
+.wallet-title{
+text-align:center;
+font-size:25px;
+color:#00ff88;
+}
+
+.card{
+background:#222;
+padding:15px;
+border-radius:15px;
+margin-top:15px;
+}
+
+input,button{
+width:100%;
+padding:12px;
+margin-top:10px;
+border-radius:10px;
+border:0;
+font-size:16px;
+}
+
+button{
+background:#00cc66;
+color:white;
+cursor:pointer;
+}
+
+.coin{
+background:#333;
+padding:15px;
+margin-top:10px;
+border-radius:15px;
+display:flex;
+justify-content:space-between;
+}
+
+.coin:hover{
+background:#006633;
+}
+
+.idbox{
+background:#000;
+padding:10px;
+border-radius:10px;
+color:#ffd700;
+}
+
+.hide{
+display:none;
+}
+</style>
+
+
+<div class="wallet-app">
+
+<h2 class="wallet-title">
+🔥 K-Wallet
+</h2>
+
+
+<div id="loginBox">
+
+<div class="card">
+
+<h3>ثبت نام / ورود</h3>
+
+<input id="username" placeholder="نام کاربری">
+
+<input id="password" type="password" placeholder="رمز عبور">
+
+<button onclick="registerUser()">
+ورود به کیف
+</button>
+
+</div>
+
+</div>
+
+
+
+<div id="walletBox" class="hide">
+
+
+<div class="card">
+
+<div class="idbox">
+شناسه کاربر:
+<span id="userID"></span>
+</div>
+
+</div>
+
+
+
+<div class="card">
+
+<h3>ارزهای من</h3>
+
+
+<div class="coin" onclick="openCoin('BTC')">
+<span>₿ Bitcoin</span>
+<span>BTC</span>
+</div>
+
+
+<div class="coin" onclick="openCoin('BCH')">
+<span>💚 Bitcoin Cash</span>
+<span>BCH</span>
+</div>
+
+
+<div class="coin" onclick="openCoin('LTC')">
+<span>⚡ Litecoin</span>
+<span>LTC</span>
+</div>
+
+
+<div class="coin" onclick="openCoin('DOGE')">
+<span>🐕 Dogecoin</span>
+<span>DOGE</span>
+</div>
+
+
+</div>
+
+
+
+<div id="coinPage" class="card hide">
+
+<h3 id="coinName"></h3>
+
+
+<button onclick="receiveCoin()">
+دریافت
+</button>
+
+
+<button onclick="sendCoin()">
+ارسال
+</button>
+
+
+<div id="addressBox"></div>
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+
+<script>
+
+
+let currentUser=null;
+
+
+
+function registerUser(){
+
+
+let name=document.getElementById("username").value;
+
+let pass=document.getElementById("password").value;
+
+
+if(name=="" || pass==""){
+alert("اطلاعات را کامل کنید");
+return;
+}
+
+
+
+let old=localStorage.getItem("walletUser");
+
+
+if(old){
+
+currentUser=JSON.parse(old);
+
+
+}
+
+else{
+
+
+let id="KW-"+Math.floor(Math.random()*900000+100000);
+
+
+currentUser={
+
+username:name,
+
+password:pass,
+
+id:id
+
+};
+
+
+localStorage.setItem(
+"walletUser",
+JSON.stringify(currentUser)
+);
+
+
+}
+
+
+
+document.getElementById("loginBox").style.display="none";
+
+document.getElementById("walletBox").classList.remove("hide");
+
+
+document.getElementById("userID").innerHTML=currentUser.id;
+
+
+}
+
+
+
+
+function openCoin(c){
+
+
+document.getElementById("coinPage").classList.remove("hide");
+
+
+document.getElementById("coinName").innerHTML=
+"کیف "+c;
+
+
+}
+
+
+
+function receiveCoin(){
+
+document.getElementById("addressBox").innerHTML=
+`
+<p>
+آدرس دریافت شما:
+</p>
+<p style="color:#00ff88">
+آدرس اختصاصی ${currentUser.id}
+</p>
+`;
+
+}
+
+
+
+function sendCoin(){
+
+document.getElementById("addressBox").innerHTML=
+`
+<input placeholder="آدرس مقصد">
+
+<input placeholder="مقدار">
+
+<button>
+تایید ارسال
+</button>
+`;
+
+}
+
+
+
+</script>
 
 <body>
 
