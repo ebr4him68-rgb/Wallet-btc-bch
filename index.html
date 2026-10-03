@@ -1,1 +1,517 @@
 
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>WALLET BTC</title>
+
+<style>
+
+body{
+    margin:0;
+    font-family:tahoma;
+    background:#ffe96b;
+}
+
+.container{
+    max-width:430px;
+    margin:auto;
+    padding:20px;
+}
+
+.logo{
+    text-align:center;
+    font-size:70px;
+}
+
+h1{
+    text-align:center;
+    color:#222;
+}
+
+.price{
+    background:#111;
+    color:#ffd700;
+    padding:15px;
+    border-radius:20px;
+    text-align:center;
+    font-size:20px;
+    margin-bottom:20px;
+}
+
+.box{
+    background:white;
+    padding:20px;
+    border-radius:25px;
+    box-shadow:0 5px 20px #999;
+}
+
+input{
+    width:100%;
+    padding:15px;
+    margin:8px 0;
+    border-radius:15px;
+    border:1px solid #ccc;
+    box-sizing:border-box;
+    font-size:16px;
+}
+
+button{
+    width:100%;
+    padding:15px;
+    border:none;
+    border-radius:20px;
+    background:#f7931a;
+    color:white;
+    font-size:18px;
+    margin-top:10px;
+}
+
+button:hover{
+    opacity:.8;
+}
+
+
+.hide{
+    display:none;
+}
+
+
+.menu{
+    display:flex;
+    gap:10px;
+}
+
+.menu button{
+    background:#222;
+}
+
+
+.coin{
+    background:#fafafa;
+    padding:15px;
+    margin:10px 0;
+    border-radius:15px;
+    border:1px solid #ddd;
+}
+
+
+.setting{
+    background:#222;
+    color:white;
+    padding:15px;
+    border-radius:15px;
+}
+
+
+.address{
+    word-break:break-all;
+    background:#eee;
+    padding:10px;
+    border-radius:10px;
+}
+
+
+</style>
+
+</head>
+
+<body>
+
+
+<div class="container">
+
+
+<div class="logo">
+₿
+</div>
+
+
+<h1>
+WALLET BTC
+</h1>
+
+
+<div class="price">
+قیمت بیت کوین:
+<br>
+<span id="btcPrice">
+در حال دریافت...
+</span>
+</div>
+
+
+
+<div class="box" id="login">
+
+<h2>
+ثبت نام / ورود
+</h2>
+
+
+<input id="username"
+placeholder="شناسه ثبت نام">
+
+
+<input id="password"
+type="password"
+placeholder="رمز ورود">
+
+
+<button onclick="login()">
+ورود به کیف
+</button>
+
+
+</div>
+
+
+
+
+<div id="wallet" class="hide">
+
+
+<div class="setting">
+
+شناسه کیف:
+<br>
+
+<b id="userid"></b>
+
+</div>
+
+
+<br>
+
+
+<div class="menu">
+
+<button onclick="receivePage()">
+دریافت
+</button>
+
+
+<button onclick="myWallet()">
+کیف من
+</button>
+
+</div>
+
+
+
+<div id="content">
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+<script>let user = JSON.parse(localStorage.getItem("walletUser"));
+
+const coins = {
+
+BTC:{
+name:"Bitcoin",
+address:"1Q99GpYnEU9yELNLjiJUWopNT1HatRYQrV",
+balance:0
+},
+
+BCH:{
+name:"Bitcoin Cash",
+address:"bitcoincash:qrj64uh0xlah2wzksudq3g5eeg2ewdyg6urq5kywku",
+balance:0
+},
+
+DOGE:{
+name:"Dogecoin",
+address:"DA9b1AqJqgsdFNuJNjzRo2g5wFj1rEeQLk",
+balance:0
+},
+
+LTC:{
+name:"Litecoin",
+address:"LZeRDFWbPLpuqeAw7m5i5YcYiu32KRAM6c",
+balance:0
+}
+
+};
+
+
+
+function login(){
+
+
+let name=document.getElementById("username").value;
+
+let pass=document.getElementById("password").value;
+
+
+if(name=="" || pass==""){
+
+alert("شناسه و رمز را وارد کنید");
+return;
+
+}
+
+
+
+if(!user){
+
+
+user={
+
+username:name,
+
+password:pass,
+
+id:"KW-"+Math.floor(100000+Math.random()*900000),
+
+coins:coins
+
+};
+
+
+localStorage.setItem(
+"walletUser",
+JSON.stringify(user)
+);
+
+
+}
+
+else{
+
+
+if(user.username!=name || user.password!=pass){
+
+alert("اطلاعات ورود اشتباه است");
+return;
+
+}
+
+
+}
+
+
+
+document.getElementById("login").classList.add("hide");
+
+document.getElementById("wallet").classList.remove("hide");
+
+
+document.getElementById("userid").innerHTML=user.id;
+
+
+}
+
+
+
+
+function receivePage(){
+
+
+let html=`
+
+<div class="box">
+
+<h2>
+انتخاب ارز برای دریافت
+</h2>
+
+`;
+
+
+for(let c in coins){
+
+html+=`
+
+<button onclick="showAddress('${c}')">
+${coins[c].name}
+(${c})
+</button>
+
+`;
+
+}
+
+
+html+=`
+
+<div id="address"></div>
+
+</div>
+
+`;
+
+
+document.getElementById("content").innerHTML=html;
+
+
+}
+
+
+
+function showAddress(c){
+
+
+let coin=coins[c];
+
+
+document.getElementById("address").innerHTML=`
+
+<hr>
+
+<h3>
+دریافت ${coin.name}
+</h3>
+
+
+<div class="address">
+
+${coin.address}
+
+</div>
+
+
+<button onclick="copyAddress('${coin.address}')">
+کپی آدرس
+</button>
+
+
+`;
+
+}
+
+
+
+function copyAddress(a){
+
+navigator.clipboard.writeText(a);
+
+alert("آدرس کپی شد");
+
+}
+
+
+
+
+function myWallet(){
+
+
+let html=`
+
+<div class="box">
+
+<h2>
+کیف من
+</h2>
+
+`;
+
+
+for(let c in coins){
+
+html+=`
+
+<div class="coin">
+
+<b>
+${coins[c].name}
+</b>
+
+<br>
+
+موجودی:
+${coins[c].balance}
+
+<br>
+
+
+<button onclick="send('${c}')">
+ارسال ${c}
+</button>
+
+
+</div>
+
+
+`;
+
+}
+
+
+html+=`
+
+</div>
+
+`;
+
+
+document.getElementById("content").innerHTML=html;
+
+
+}
+
+
+
+
+function send(c){
+
+
+document.getElementById("content").innerHTML=`
+
+<div class="box">
+
+<h2>
+ارسال ${c}
+</h2>
+
+
+<input placeholder="آدرس مقصد">
+
+
+<input placeholder="مقدار">
+
+
+<button>
+تایید ارسال
+</button>
+
+
+</div>
+
+`;
+
+}
+
+
+
+// قیمت نمونه، بعداً به API وصل می‌شود
+
+document.getElementById("btcPrice").innerHTML=
+"$ 0.00";
+
+
+// اگر قبلاً وارد شده باشد
+
+if(user){
+
+document.getElementById("login").classList.add("hide");
+
+document.getElementById("wallet").classList.remove("hide");
+
+document.getElementById("userid").innerHTML=user.id;
+
+}
+
+</script>
+
+
+</body>
+  </html>
