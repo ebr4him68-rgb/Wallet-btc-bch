@@ -553,6 +553,291 @@ setInterval(getBTCPrice,30000);
 
 
     </script>
+    <style>
+
+.settings-btn{
+position:fixed;
+top:15px;
+left:15px;
+background:#222;
+color:white;
+border-radius:50%;
+width:50px;
+height:50px;
+font-size:25px;
+border:0;
+z-index:999;
+}
+
+.panel{
+background:white;
+padding:20px;
+border-radius:20px;
+margin-top:20px;
+box-shadow:0 5px 20px #888;
+}
+
+.tx{
+background:#eee;
+padding:12px;
+border-radius:15px;
+margin-top:10px;
+}
+
+</style>
+
+
+<button class="settings-btn" onclick="openSettings()">
+⚙
+</button>
+
+
+<div id="settingsPage" class="hide">
+
+<div class="panel">
+
+<h2>
+⚙ تنظیمات کیف
+</h2>
+
+
+<h3>
+1- شناسه کاربر
+</h3>
+
+<p id="settingID"></p>
+
+
+
+<h3>
+2- موجودی کلی کیف
+</h3>
+
+<p id="totalUSD">
+0 $
+</p>
+
+
+
+<h3>
+3- تراکنش‌های ارسال ارز
+</h3>
+
+
+<div id="userTransactions">
+
+تراکنشی وجود ندارد
+
+</div>
+
+
+
+<h3>
+4- پنل ادمین
+</h3>
+
+
+<input id="adminPass"
+placeholder="رمز ادمین">
+
+
+<button onclick="adminLogin()">
+ورود ادمین
+</button>
+
+
+<div id="adminPanel"></div>
+
+
+<button onclick="closeSettings()">
+بازگشت
+</button>
+
+
+</div>
+
+</div>
+
+
+
+<script>
+
+
+let transactions =
+JSON.parse(localStorage.getItem("transactions")) || [];
+
+
+
+function openSettings(){
+
+
+document.getElementById("settingsPage")
+.classList.remove("hide");
+
+
+document.getElementById("settingID")
+.innerHTML =
+user ? user.id : "بدون ورود";
+
+
+showTransactions();
+
+
+}
+
+
+
+function closeSettings(){
+
+document.getElementById("settingsPage")
+.classList.add("hide");
+
+}
+
+
+
+
+function showTransactions(){
+
+
+let box =
+document.getElementById("userTransactions");
+
+
+let html="";
+
+
+let mytx =
+transactions.filter(t=>t.user==user.id);
+
+
+
+if(mytx.length==0){
+
+box.innerHTML="تراکنشی وجود ندارد";
+return;
+
+}
+
+
+
+mytx.forEach(t=>{
+
+
+html+=`
+
+<div class="tx">
+
+ارز:
+${t.coin}
+
+<br>
+
+مقدار:
+${t.amount}
+
+<br>
+
+آدرس مقصد:
+${t.address}
+
+<br>
+
+وضعیت:
+🟡 در حال بررسی
+
+
+</div>
+
+`;
+
+
+});
+
+
+box.innerHTML=html;
+
+
+}
+
+
+
+
+function adminLogin(){
+
+
+let pass =
+document.getElementById("adminPass").value;
+
+
+
+if(pass=="Admin321"){
+
+
+let html=`
+
+<h3>
+پنل ادمین
+</h3>
+
+`;
+
+
+transactions.forEach(t=>{
+
+
+html+=`
+
+<div class="tx">
+
+کاربر:
+${t.user}
+
+<br>
+
+ارز:
+${t.coin}
+
+<br>
+
+مقدار:
+${t.amount}
+
+<br>
+
+آدرس دریافت کاربر:
+${t.address}
+
+
+</div>
+
+
+`;
+
+
+});
+
+
+document.getElementById("adminPanel")
+.innerHTML=html;
+
+
+}
+
+else{
+
+alert("رمز اشتباه است");
+
+}
+
+
+
+}
+
+
+
+
+</script>
 
 
 </body>
