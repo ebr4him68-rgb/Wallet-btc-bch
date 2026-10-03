@@ -1071,7 +1071,182 @@ document.getElementById("marketList").innerHTML=
 
 
     </script>
+    
+<style>
 
+.market-area{
+margin-top:25px;
+display:none;
+}
+
+.market-btn{
+background:#00c853;
+color:white;
+border:0;
+border-radius:20px;
+padding:14px 35px;
+font-size:18px;
+cursor:pointer;
+animation:blinkMarket 1s infinite;
+}
+
+@keyframes blinkMarket{
+0%{background:#00c853;}
+50%{background:#ffd600;}
+100%{background:#00c853;}
+}
+
+
+.market-box{
+display:none;
+background:white;
+margin-top:15px;
+border-radius:20px;
+padding:15px;
+max-height:450px;
+overflow:auto;
+}
+
+
+.market-row{
+display:flex;
+justify-content:space-between;
+padding:12px;
+border-bottom:1px solid #ddd;
+}
+
+</style>
+
+
+
+<div id="marketArea" class="market-area">
+
+<button class="market-btn" onclick="toggleMarket()">
+بازار
+</button>
+
+
+<div id="marketBox" class="market-box">
+
+<h3>
+۱۰۰ ارز برتر بازار
+</h3>
+
+<div id="marketList">
+در حال دریافت...
+</div>
+
+</div>
+
+
+</div>
+
+
+
+<script>
+
+
+function checkMarket(){
+
+let wallet=document.getElementById("wallet");
+
+
+if(wallet && !wallet.classList.contains("hide")){
+
+document.getElementById("marketArea").style.display="block";
+
+}
+
+else{
+
+document.getElementById("marketArea").style.display="none";
+
+}
+
+}
+
+
+setInterval(checkMarket,500);
+
+
+
+function toggleMarket(){
+
+let box=document.getElementById("marketBox");
+
+
+if(box.style.display=="block"){
+
+box.style.display="none";
+
+}
+
+else{
+
+box.style.display="block";
+
+loadMarket();
+
+}
+
+}
+
+
+
+async function loadMarket(){
+
+try{
+
+let r=await fetch(
+"https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1"
+);
+
+
+let data=await r.json();
+
+
+let html="";
+
+
+data.forEach((coin,index)=>{
+
+html+=`
+
+<div class="market-row">
+
+<span>
+${index+1} ${coin.symbol.toUpperCase()}
+</span>
+
+
+<span>
+$${coin.current_price.toLocaleString()}
+</span>
+
+</div>
+
+`;
+
+});
+
+
+document.getElementById("marketList").innerHTML=html;
+
+
+}
+
+catch{
+
+document.getElementById("marketList").innerHTML=
+"خطا در دریافت بازار";
+
+}
+
+
+}
+
+
+    </script>
 
 </body>
   </html>
