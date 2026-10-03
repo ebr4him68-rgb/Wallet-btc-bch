@@ -1,185 +1,662 @@
+
 <!DOCTYPE html>
-<html lang="fa" dir="rtl"><meta name="google-site-verification" content="lZLR5uhyQqsieKLPlzF1qPCvRwreEXdlfhfuPFujwiE" />
-<head><head>
-
+<html lang="fa" dir="rtl">
+<head><link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#ffe96b">
+<link rel="apple-touch-icon" href="icon.png">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Crypto Wallet</title>
-
-<meta name="description" content="Crypto Wallet - Secure digital wallet for BTC BCH LTC DOGE">
-
-<meta name="google-site-verification" content="lZLR5uhyQqsieKLPlzF1qPCvRwreEXdlfhfuPFujwiE" />
-
-</head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Crypto Wallet</title>
+<title>WALLET BTC</title>
 
 <style>
+
 body{
     margin:0;
-    font-family:tahoma,Arial;
-    background:#111;
-    color:white;
+    font-family:tahoma;
+    background:#ffe96b;
 }
 
-.header{
-    background:#000;
+.container{
+    max-width:430px;
+    margin:auto;
     padding:20px;
-    text-align:center;
-    font-size:24px;
-    color:#ff9800;
 }
 
-.price-box{
-    display:flex;
-    gap:10px;
-    padding:15px;
-    overflow:auto;
+.logo{
+    text-align:center;
+    font-size:70px;
+}
+
+h1{
+    text-align:center;
+    color:#222;
 }
 
 .price{
-    background:#222;
-    padding:12px;
+    background:#111;
+    color:#ffd700;
+    padding:15px;
+    border-radius:20px;
+    text-align:center;
+    font-size:20px;
+    margin-bottom:20px;
+}
+
+.box{
+    background:white;
+    padding:20px;
+    border-radius:25px;
+    box-shadow:0 5px 20px #999;
+}
+
+input{
+    width:100%;
+    padding:15px;
+    margin:8px 0;
     border-radius:15px;
-    min-width:140px;
-}
-
-.green{
-    color:#00ff66;
-}
-
-.wallet{
-    padding:20px;
-}
-
-.coin{
-    background:#222;
-    margin:12px 0;
-    padding:20px;
-    border-radius:18px;
-    cursor:pointer;
-    display:flex;
-    justify-content:space-between;
-}
-
-.coin:hover{
-    background:#333;
-}
-
-.page{
-    display:none;
-    padding:20px;
+    border:1px solid #ccc;
+    box-sizing:border-box;
+    font-size:16px;
 }
 
 button{
     width:100%;
     padding:15px;
-    border:0;
-    border-radius:15px;
-    margin:8px 0;
+    border:none;
+    border-radius:20px;
+    background:#f7931a;
+    color:white;
     font-size:18px;
-    cursor:pointer;
+    margin-top:10px;
 }
 
-.send{
-    background:#ff9800;
+button:hover{
+    opacity:.8;
 }
 
-.receive{
-    background:#00c853;
+
+.hide{
+    display:none;
 }
 
-.address{
+
+.menu{
+    display:flex;
+    gap:10px;
+}
+
+.menu button{
     background:#222;
+}
+
+
+.coin{
+    background:#fafafa;
+    padding:15px;
+    margin:10px 0;
+    border-radius:15px;
+    border:1px solid #ddd;
+}
+
+
+.setting{
+    background:#222;
+    color:white;
     padding:15px;
     border-radius:15px;
-    word-break:break-all;
 }
+
+
+.address{
+    word-break:break-all;
+    background:#eee;
+    padding:10px;
+    border-radius:10px;
+}
+
+
 </style>
 
 </head>
 
 <body>
 
-<div class="header">
-💰 کیف پول کریپتو
+
+<div class="container">
+
+
+<div class="logo">
+₿
 </div>
 
 
-<div class="price-box">
+<h1>
+WALLET BTC
+</h1>
+
 
 <div class="price">
-🟢 BTC<br>
-<span>Bitcoin</span>
-</div>
-
-<div class="price">
-🟢 BCH<br>
-<span>Bitcoin Cash</span>
-</div>
-
-<div class="price">
-🟢 LTC<br>
-<span>Litecoin</span>
-</div>
-
-<div class="price">
-🟢 DOGE<br>
-<span>Dogecoin</span>
-</div>
-
-</div>
-
-
-<div id="home" class="wallet">
-
-<h3>ارزهای من</h3>
-
-<div class="coin" onclick="openCoin('BTC')">
-₿ Bitcoin
-<span>BTC</span>
-</div>
-
-<div class="coin" onclick="openCoin('BCH')">
-🟢 Bitcoin Cash
-<span>BCH</span>
-</div>
-
-<div class="coin" onclick="openCoin('LTC')">
-⚡ Litecoin
-<span>LTC</span>
-</div>
-
-<div class="coin" onclick="openCoin('DOGE')">
-🐕 Dogecoin
-<span>DOGE</span>
-</div>
-
+قیمت بیت کوین:
+<br>
+<span id="btcPrice">
+در حال دریافت...
+</span>
 </div>
 
 
 
-<div id="coinPage" class="page">
+<div class="box" id="login">
 
-<h2 id="coinName"></h2>
+<h2>
+ثبت نام / ورود
+</h2>
 
-<button class="send" onclick="alert('صفحه ارسال در مرحله بعد متصل می‌شود')">
-ارسال
+
+<input id="username"
+placeholder="شناسه ثبت نام">
+
+
+<input id="password"
+type="password"
+placeholder="رمز ورود">
+
+
+<button onclick="login()">
+ورود به کیف
 </button>
 
-<button class="receive" onclick="showReceive()">
-دریافت
-</button>
 
-<div id="receiveBox"></div>
+</div>
+
+
+
+
+<div id="wallet" class="hide">
+
+
+<div class="setting">
+
+شناسه کیف:
+<br>
+
+<b id="userid"></b>
+
+</div>
+
 
 <br>
 
-<button onclick="back()">
+
+<div class="menu">
+
+<button onclick="receivePage()">
+دریافت
+</button>
+
+
+<button onclick="myWallet()">
+کیف من
+</button>
+
+</div>
+
+
+
+<div id="content">
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+<script>let user = JSON.parse(localStorage.getItem("walletUser"));
+
+const coins = {
+
+BTC:{
+name:"Bitcoin",
+address:"1Q99GpYnEU9yELNLjiJUWopNT1HatRYQrV",
+balance:0
+},
+
+BCH:{
+name:"Bitcoin Cash",
+address:"bitcoincash:qrj64uh0xlah2wzksudq3g5eeg2ewdyg6urq5kywku",
+balance:0
+},
+
+DOGE:{
+name:"Dogecoin",
+address:"DA9b1AqJqgsdFNuJNjzRo2g5wFj1rEeQLk",
+balance:0
+},
+
+LTC:{
+name:"Litecoin",
+address:"LZeRDFWbPLpuqeAw7m5i5YcYiu32KRAM6c",
+balance:0
+}
+
+};
+
+
+
+function login(){
+
+
+let name=document.getElementById("username").value;
+
+let pass=document.getElementById("password").value;
+
+
+if(name=="" || pass==""){
+
+alert("شناسه و رمز را وارد کنید");
+return;
+
+}
+
+
+
+if(!user){
+
+
+user={
+
+username:name,
+
+password:pass,
+
+id:"KW-"+Math.floor(100000+Math.random()*900000),
+
+coins:coins
+
+};
+
+
+localStorage.setItem(
+"walletUser",
+JSON.stringify(user)
+);
+
+
+}
+
+else{
+
+
+if(user.username!=name || user.password!=pass){
+
+alert("اطلاعات ورود اشتباه است");
+return;
+
+}
+
+
+}
+
+
+
+document.getElementById("login").classList.add("hide");
+
+document.getElementById("wallet").classList.remove("hide");
+
+
+document.getElementById("userid").innerHTML=user.id;
+
+
+}
+
+
+
+
+function receivePage(){
+
+
+let html=`
+
+<div class="box">
+
+<h2>
+انتخاب ارز برای دریافت
+</h2>
+
+`;
+
+
+for(let c in coins){
+
+html+=`
+
+<button onclick="showAddress('${c}')">
+${coins[c].name}
+(${c})
+</button>
+
+`;
+
+}
+
+
+html+=`
+
+<div id="address"></div>
+
+</div>
+
+`;
+
+
+document.getElementById("content").innerHTML=html;
+
+
+}
+
+
+
+function showAddress(c){
+
+
+let coin=coins[c];
+
+
+document.getElementById("address").innerHTML=`
+
+<hr>
+
+<h3>
+دریافت ${coin.name}
+</h3>
+
+
+<div class="address">
+
+${coin.address}
+
+</div>
+
+
+<button onclick="copyAddress('${coin.address}')">
+کپی آدرس
+</button>
+
+
+`;
+
+}
+
+
+
+function copyAddress(a){
+
+navigator.clipboard.writeText(a);
+
+alert("آدرس کپی شد");
+
+}
+
+
+
+
+function myWallet(){
+
+
+let html=`
+
+<div class="box">
+
+<h2>
+کیف من
+</h2>
+
+`;
+
+
+for(let c in coins){
+
+html+=`
+
+<div class="coin">
+
+<b>
+${coins[c].name}
+</b>
+
+<br>
+
+موجودی:
+${coins[c].balance}
+
+<br>
+
+
+<button onclick="send('${c}')">
+ارسال ${c}
+</button>
+
+
+</div>
+
+
+`;
+
+}
+
+
+html+=`
+
+</div>
+
+`;
+
+
+document.getElementById("content").innerHTML=html;
+
+
+}
+
+
+
+
+function send(c){
+
+
+document.getElementById("content").innerHTML=`
+
+<div class="box">
+
+<h2>
+ارسال ${c}
+</h2>
+
+
+<input placeholder="آدرس مقصد">
+
+
+<input placeholder="مقدار">
+
+
+<button>
+تایید ارسال
+</button>
+
+
+</div>
+
+`;
+
+}
+
+
+
+// قیمت نمونه، بعداً به API وصل می‌شود
+
+document.getElementById("btcPrice").innerHTML=
+"$ 0.00";
+
+
+// اگر قبلاً وارد شده باشد
+
+if(user){
+
+document.getElementById("login").classList.add("hide");
+
+document.getElementById("wallet").classList.remove("hide");
+
+document.getElementById("userid").innerHTML=user.id;
+
+}
+
+</script>
+    <script>
+
+async function getBTCPrice(){
+
+try{
+
+let response = await fetch(
+"https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd"
+);
+
+let data = await response.json();
+
+
+let price =
+data.bitcoin.usd.toLocaleString();
+
+
+document.getElementById("btcPrice").innerHTML =
+"$ " + price;
+
+
+}
+
+catch(error){
+
+document.getElementById("btcPrice").innerHTML =
+"خطا در دریافت قیمت";
+
+}
+
+}
+
+
+// اجرای اول
+getBTCPrice();
+
+
+// بروزرسانی هر ۳۰ ثانیه
+setInterval(getBTCPrice,30000);
+
+
+    </script>
+    <style>
+
+.settings-btn{
+position:fixed;
+top:15px;
+left:15px;
+background:#222;
+color:white;
+border-radius:50%;
+width:50px;
+height:50px;
+font-size:25px;
+border:0;
+z-index:999;
+}
+
+.panel{
+background:white;
+padding:20px;
+border-radius:20px;
+margin-top:20px;
+box-shadow:0 5px 20px #888;
+}
+
+.tx{
+background:#eee;
+padding:12px;
+border-radius:15px;
+margin-top:10px;
+}
+
+</style>
+
+
+<button class="settings-btn" onclick="openSettings()">
+⚙
+</button>
+
+
+<div id="settingsPage" class="hide">
+
+<div class="panel">
+
+<h2>
+⚙ تنظیمات کیف
+</h2>
+
+
+<h3>
+1- شناسه کاربر
+</h3>
+
+<p id="settingID"></p>
+
+
+
+<h3>
+2- موجودی کلی کیف
+</h3>
+
+<p id="totalUSD">
+0 $
+</p>
+
+
+
+<h3>
+3- تراکنش‌های ارسال ارز
+</h3>
+
+
+<div id="userTransactions">
+
+تراکنشی وجود ندارد
+
+</div>
+
+
+
+<h3>
+4- پنل ادمین
+</h3>
+
+
+<input id="adminPass"
+placeholder="رمز ادمین">
+
+
+<button onclick="adminLogin()">
+ورود ادمین
+</button>
+
+
+<div id="adminPanel"></div>
+
+
+<button onclick="closeSettings()">
 بازگشت
 </button>
+
+
+</div>
 
 </div>
 
@@ -187,57 +664,1212 @@ button{
 
 <script>
 
-let addresses={
 
-BTC:"1Q99GpYnEU9yELNLjiJUWopNT1HatRYQrV",
-
-BCH:"bitcoincash:qrj64uh0xlah2wzksudq3g5eeg2ewdyg6urq5kywku",
-
-LTC:"LZeRDFWbPLpuqeAw7m5i5YcYiu32RAM6c",
-
-DOGE:"DA9xxxxxxxxxxxxxxxxxxxxxxxx"
-
-};
+let transactions =
+JSON.parse(localStorage.getItem("transactions")) || [];
 
 
-let current="";
+
+function openSettings(){
 
 
-function openCoin(c){
+document.getElementById("settingsPage")
+.classList.remove("hide");
 
-current=c;
 
-document.getElementById("home").style.display="none";
+document.getElementById("settingID")
+.innerHTML =
+user ? user.id : "بدون ورود";
 
-document.getElementById("coinPage").style.display="block";
 
-document.getElementById("coinName").innerHTML=c+" Wallet";
+showTransactions();
+
 
 }
 
 
-function showReceive(){
 
-document.getElementById("receiveBox").innerHTML=
+function closeSettings(){
 
-"<h3>آدرس دریافت "+current+"</h3>"+
-"<div class='address'>"+
-addresses[current]+
-"</div>";
+document.getElementById("settingsPage")
+.classList.add("hide");
 
 }
 
 
-function back(){
 
-document.getElementById("coinPage").style.display="none";
 
-document.getElementById("home").style.display="block";
+function showTransactions(){
+
+
+let box =
+document.getElementById("userTransactions");
+
+
+let html="";
+
+
+let mytx =
+transactions.filter(t=>t.user==user.id);
+
+
+
+if(mytx.length==0){
+
+box.innerHTML="تراکنشی وجود ندارد";
+return;
 
 }
+
+
+
+mytx.forEach(t=>{
+
+
+html+=`
+
+<div class="tx">
+
+ارز:
+${t.coin}
+
+<br>
+
+مقدار:
+${t.amount}
+
+<br>
+
+آدرس مقصد:
+${t.address}
+
+<br>
+
+وضعیت:
+🟡 در حال بررسی
+
+
+</div>
+
+`;
+
+
+});
+
+
+box.innerHTML=html;
+
+
+}
+
+
+
+
+function adminLogin(){
+
+
+let pass =
+document.getElementById("adminPass").value;
+
+
+
+if(pass=="Admin321"){
+
+
+let html=`
+
+<h3>
+پنل ادمین
+</h3>
+
+`;
+
+
+transactions.forEach(t=>{
+
+
+html+=`
+
+<div class="tx">
+
+کاربر:
+${t.user}
+
+<br>
+
+ارز:
+${t.coin}
+
+<br>
+
+مقدار:
+${t.amount}
+
+<br>
+
+آدرس دریافت کاربر:
+${t.address}
+
+
+</div>
+
+
+`;
+
+
+});
+
+
+document.getElementById("adminPanel")
+.innerHTML=html;
+
+
+}
+
+else{
+
+alert("رمز اشتباه است");
+
+}
+
+
+
+}
+
+
+
 
 </script>
+    <style>
+
+.settings-btn{
+position:fixed;
+top:15px;
+left:15px;
+width:50px;
+height:50px;
+border-radius:50%;
+background:#222;
+color:white;
+font-size:25px;
+border:0;
+display:none;
+z-index:999;
+}
+
+</style>
 
 
+<button id="settingButton" class="settings-btn" onclick="openSettings()">
+⚙
+</button>
+
+
+<script>
+
+// نمایش تنظیمات فقط بعد از ورود
+
+function showSettingButton(){
+
+let wallet =
+document.getElementById("wallet");
+
+
+if(wallet && !wallet.classList.contains("hide")){
+
+document.getElementById("settingButton").style.display="block";
+
+}
+
+else{
+
+document.getElementById("settingButton").style.display="none";
+
+}
+
+}
+
+
+// بررسی هر نیم ثانیه وضعیت ورود
+
+setInterval(showSettingButton,500);
+
+
+</script>
+    <style>
+
+.market-area{
+margin-top:20px;
+text-align:right;
+}
+
+
+.market-btn{
+
+background:#00c853;
+color:white;
+border:0;
+border-radius:20px;
+padding:14px 35px;
+font-size:18px;
+animation:marketBlink 1.2s infinite;
+cursor:pointer;
+
+}
+
+
+@keyframes marketBlink{
+
+0%{
+background:#00c853;
+}
+
+50%{
+background:#ffd600;
+}
+
+100%{
+background:#00c853;
+}
+
+}
+
+
+.market-box{
+
+display:none;
+background:white;
+margin-top:15px;
+border-radius:20px;
+padding:15px;
+max-height:500px;
+overflow:auto;
+
+}
+
+
+.market-item{
+
+display:flex;
+justify-content:space-between;
+padding:12px;
+border-bottom:1px solid #ddd;
+
+}
+
+
+</style>
+
+
+
+<div class="market-area">
+
+<button class="market-btn" onclick="toggleMarket()">
+بازار
+</button>
+
+
+<div id="marketBox" class="market-box">
+
+<h3>
+۱۰۰ ارز برتر بازار
+</h3>
+
+
+<div id="marketList">
+در حال دریافت قیمت...
+</div>
+
+
+</div>
+
+</div>
+
+
+
+<script>
+
+
+function toggleMarket(){
+
+let box=document.getElementById("marketBox");
+
+
+if(box.style.display=="block"){
+
+box.style.display="none";
+
+}
+
+else{
+
+box.style.display="block";
+
+getMarket();
+
+}
+
+
+}
+
+
+
+
+async function getMarket(){
+
+
+try{
+
+
+let r=await fetch(
+"https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1"
+);
+
+
+let coins=await r.json();
+
+
+let html="";
+
+
+coins.forEach((c,i)=>{
+
+
+html+=`
+
+<div class="market-item">
+
+<span>
+${i+1}. ${c.symbol.toUpperCase()}
+</span>
+
+
+<span>
+$${c.current_price.toLocaleString()}
+</span>
+
+
+</div>
+
+`;
+
+});
+
+
+document.getElementById("marketList").innerHTML=html;
+
+
+}
+
+catch{
+
+document.getElementById("marketList").innerHTML=
+"عدم دریافت قیمت";
+
+}
+
+
+}
+
+
+    </script>
+    
+<style>
+
+.market-area{
+margin-top:25px;
+display:none;
+}
+
+.market-btn{
+background:#00c853;
+color:white;
+border:0;
+border-radius:20px;
+padding:14px 35px;
+font-size:18px;
+cursor:pointer;
+animation:blinkMarket 1s infinite;
+}
+
+@keyframes blinkMarket{
+0%{background:#00c853;}
+50%{background:#ffd600;}
+100%{background:#00c853;}
+}
+
+
+.market-box{
+display:none;
+background:white;
+margin-top:15px;
+border-radius:20px;
+padding:15px;
+max-height:450px;
+overflow:auto;
+}
+
+
+.market-row{
+display:flex;
+justify-content:space-between;
+padding:12px;
+border-bottom:1px solid #ddd;
+}
+
+</style>
+
+
+
+<div id="marketArea" class="market-area">
+
+<button class="market-btn" onclick="toggleMarket()">
+بازار
+</button>
+
+
+<div id="marketBox" class="market-box">
+
+<h3>
+۱۰۰ ارز برتر بازار
+</h3>
+
+<div id="marketList">
+در حال دریافت...
+</div>
+
+</div>
+
+
+</div>
+
+
+
+<script>
+
+
+function checkMarket(){
+
+let wallet=document.getElementById("wallet");
+
+
+if(wallet && !wallet.classList.contains("hide")){
+
+document.getElementById("marketArea").style.display="block";
+
+}
+
+else{
+
+document.getElementById("marketArea").style.display="none";
+
+}
+
+}
+
+
+setInterval(checkMarket,500);
+
+
+
+function toggleMarket(){
+
+let box=document.getElementById("marketBox");
+
+
+if(box.style.display=="block"){
+
+box.style.display="none";
+
+}
+
+else{
+
+box.style.display="block";
+
+loadMarket();
+
+}
+
+}
+
+
+
+async function loadMarket(){
+
+try{
+
+let r=await fetch(
+"https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1"
+);
+
+
+let data=await r.json();
+
+
+let html="";
+
+
+data.forEach((coin,index)=>{
+
+html+=`
+
+<div class="market-row">
+
+<span>
+${index+1} ${coin.symbol.toUpperCase()}
+</span>
+
+
+<span>
+$${coin.current_price.toLocaleString()}
+</span>
+
+</div>
+
+`;
+
+});
+
+
+document.getElementById("marketList").innerHTML=html;
+
+
+}
+
+catch{
+
+document.getElementById("marketList").innerHTML=
+"خطا در دریافت بازار";
+
+}
+
+
+}
+
+
+    </script>
+    <style>
+
+#marketArea,
+.market-area,
+.market-btn{
+display:none;
+}
+
+
+#newMarketArea{
+margin-top:20px;
+display:none;
+}
+
+
+#newMarketBtn{
+background:#00c853;
+color:white;
+border:0;
+border-radius:25px;
+padding:14px 35px;
+font-size:18px;
+animation:marketBlink 1s infinite;
+}
+
+
+@keyframes marketBlink{
+
+0%{background:#00c853;}
+50%{background:#ffd600;}
+100%{background:#00c853;}
+
+}
+
+
+#newMarketBox{
+
+display:none;
+background:white;
+border-radius:20px;
+padding:15px;
+margin-top:15px;
+max-height:500px;
+overflow:auto;
+
+}
+
+
+.newCoin{
+
+display:flex;
+justify-content:space-between;
+padding:12px;
+border-bottom:1px solid #ddd;
+
+}
+
+</style>
+
+
+
+<div id="newMarketArea">
+
+
+<button id="newMarketBtn" onclick="newMarketOpen()">
+بازار
+</button>
+
+
+<div id="newMarketBox">
+
+<h3>
+۱۰۰ ارز برتر بازار
+</h3>
+
+
+<div id="newMarketList">
+در حال دریافت...
+</div>
+
+
+</div>
+
+
+</div>
+
+
+
+<script>
+
+
+// مخفی کردن بازارهای قبلی
+
+setInterval(function(){
+
+
+document.querySelectorAll(".market-btn,.market-area,#marketArea")
+.forEach(function(e){
+
+e.style.display="none";
+
+});
+
+
+
+let wallet=document.getElementById("wallet");
+
+
+if(wallet && !wallet.classList.contains("hide")){
+
+document.getElementById("newMarketArea").style.display="block";
+
+}else{
+
+document.getElementById("newMarketArea").style.display="none";
+
+}
+
+
+
+},500);
+
+
+
+
+
+function newMarketOpen(){
+
+
+let box=document.getElementById("newMarketBox");
+
+
+if(box.style.display=="block"){
+
+box.style.display="none";
+
+}else{
+
+box.style.display="block";
+
+loadNewMarket();
+
+}
+
+
+}
+
+
+
+
+
+async function loadNewMarket(){
+
+
+try{
+
+
+let r=await fetch(
+
+"https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=false"
+
+);
+
+
+
+let data=await r.json();
+
+
+let html="";
+
+
+
+data.forEach(function(c,i){
+
+
+html+=`
+
+<div class="newCoin">
+
+<span>
+${i+1} ${c.symbol.toUpperCase()}
+<br>
+${c.name}
+</span>
+
+
+<span>
+$${c.current_price.toLocaleString()}
+<br>
+${c.price_change_percentage_24h ?
+c.price_change_percentage_24h.toFixed(2)
+:"0"}%
+
+</span>
+
+
+</div>
+
+`;
+
+});
+
+
+document.getElementById("newMarketList").innerHTML=html;
+
+
+}
+
+catch(e){
+
+document.getElementById("newMarketList").innerHTML=
+"بازار فعلا در دسترس نیست";
+
+}
+
+
+}
+
+
+</script>
+    <style>
+
+.theme-panel{
+display:none;
+background:white;
+padding:15px;
+border-radius:20px;
+margin-top:15px;
+}
+
+.theme-btn{
+
+width:35px;
+height:35px;
+border-radius:50%;
+border:2px solid #222;
+margin:5px;
+cursor:pointer;
+
+}
+
+
+</style>
+
+
+
+<script>
+
+
+// انگلیسی کردن جهت و نوشته های کیف
+
+function setWalletEnglish(){
+
+let wallet=document.getElementById("wallet");
+
+if(wallet){
+
+wallet.style.direction="ltr";
+wallet.style.textAlign="left";
+
+}
+
+}
+
+
+
+
+// اضافه کردن بخش تم داخل تنظیمات
+
+function addThemeMenu(){
+
+
+let settings =
+document.getElementById("settingsPage");
+
+
+if(settings && !document.getElementById("themePanel")){
+
+
+let div=document.createElement("div");
+
+div.id="themePanel";
+
+div.className="theme-panel";
+
+
+div.innerHTML=`
+
+<h3>
+Theme
+</h3>
+
+
+<button class="theme-btn" style="background:#ffe96b"
+onclick="changeTheme('#ffe96b')"></button>
+
+
+<button class="theme-btn" style="background:#111"
+onclick="changeTheme('#111')"></button>
+
+
+<button class="theme-btn" style="background:#2196f3"
+onclick="changeTheme('#2196f3')"></button>
+
+
+<button class="theme-btn" style="background:#9c27b0"
+onclick="changeTheme('#9c27b0')"></button>
+
+
+<button class="theme-btn" style="background:#ff5722"
+onclick="changeTheme('#ff5722')"></button>
+
+
+<button class="theme-btn" style="background:#4caf50"
+onclick="changeTheme('#4caf50')"></button>
+
+
+<button class="theme-btn" style="background:#00bcd4"
+onclick="changeTheme('#00bcd4')"></button>
+
+
+<button class="theme-btn" style="background:#e91e63"
+onclick="changeTheme('#e91e63')"></button>
+
+
+<button class="theme-btn" style="background:#795548"
+onclick="changeTheme('#795548')"></button>
+
+
+<button class="theme-btn" style="background:#607d8b"
+onclick="changeTheme('#607d8b')"></button>
+
+
+`;
+
+
+settings.appendChild(div);
+
+
+}
+
+
+}
+
+
+
+
+function changeTheme(color){
+
+document.body.style.background=color;
+
+localStorage.setItem(
+"walletTheme",
+color
+);
+
+}
+
+
+
+setInterval(function(){
+
+addThemeMenu();
+
+setWalletEnglish();
+
+},1000);
+
+
+
+// نگه داشتن تم انتخاب شده
+
+let savedTheme =
+localStorage.getItem("walletTheme");
+
+
+if(savedTheme){
+
+document.body.style.background=savedTheme;
+
+}
+
+
+</scri
+    <style>
+
+/* Global App Style */
+
+body{
+    background:#ffe96b !important;
+    font-family:Arial, Tahoma, sans-serif !important;
+}
+
+
+.container{
+    max-width:430px !important;
+    margin:auto;
+    padding:15px;
+}
+
+
+/* Logo */
+
+.logo{
+    background:white;
+    width:120px;
+    height:120px;
+    margin:20px auto;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:75px !important;
+    box-shadow:0 10px 30px rgba(0,0,0,.2);
+}
+
+
+
+/* Title */
+
+h1{
+    font-size:30px !important;
+    font-weight:800;
+    letter-spacing:1px;
+}
+
+
+
+/* BTC Price Card */
+
+.price{
+
+    background:#111 !important;
+    color:#ffd700 !important;
+    border-radius:25px !important;
+    padding:20px !important;
+    font-size:22px !important;
+    box-shadow:0 8px 25px rgba(0,0,0,.3);
+
+}
+
+
+
+/* Main Cards */
+
+.box,
+.panel,
+.coin{
+
+    background:white !important;
+    border-radius:28px !important;
+    padding:20px !important;
+    box-shadow:
+    0 10px 30px rgba(0,0,0,.15) !important;
+
+    border:none !important;
+
+}
+
+
+
+/* Inputs */
+
+input{
+
+background:#f7f7f7 !important;
+border:none !important;
+padding:17px !important;
+border-radius:18px !important;
+font-size:17px !important;
+
+}
+
+
+
+/* Buttons */
+
+button{
+
+border-radius:22px !important;
+font-weight:bold;
+box-shadow:0 6px 15px rgba(0,0,0,.15);
+
+}
+
+
+
+/* Wallet Header */
+
+.setting{
+
+background:#111 !important;
+color:white !important;
+border-radius:25px !important;
+text-align:center;
+
+}
+
+
+
+/* Menu Buttons */
+
+
+.menu button{
+
+height:55px;
+font-size:17px;
+
+}
+
+
+/* Coin Cards */
+
+.coin{
+
+margin-top:15px !important;
+font-size:17px;
+
+}
+
+
+/* Address */
+
+.address{
+
+background:#f1f1f1 !important;
+border-radius:18px !important;
+padding:15px !important;
+
+}
+
+
+/* Settings Button */
+
+.settings-btn{
+
+box-shadow:0 8px 20px rgba(0,0,0,.3);
+
+}
+
+
+
+/* Market Style */
+
+
+#newMarketArea,
+#marketArea{
+
+text-align:center;
+
+}
+
+
+.market-btn,
+#newMarketBtn{
+
+background:#00c853 !important;
+border-radius:30px !important;
+padding:16px 45px !important;
+font-size:18px !important;
+
+}
+
+
+
+/* Mobile App Feel */
+
+#wallet{
+
+animation:appShow .5s ease;
+
+}
+
+
+@keyframes appShow{
+
+from{
+opacity:0;
+transform:translateY(20px);
+}
+
+to{
+opacity:1;
+transform:none;
+}
+
+}
+
+
+/* Scroll */
+
+::-webkit-scrollbar{
+
+width:5px;
+
+}
+
+
+    </style>
+    <head>
+
+<meta charset="UTF-8">
+
+اینجا کدهای اپ را اضافه کن
+
+<title>WALLET BTC</title>
+
+    </head>
+    <script>
+
+if ("serviceWorker" in navigator){
+
+window.addEventListener("load",()=>{
+
+navigator.serviceWorker.register("/service-worker.js");
+
+});
+
+}
+
+    </script>
+<meta name="google-site-verification" content="lZLR5uhyQqsieKLPlzF1qPCvRwreEXdlfhfuPFujwiE" />
 </body>
-</html>
+  </html>
