@@ -1,0 +1,5 @@
+
+User-agent: *
+Allow: /
+
+Sitemap: https://9470b254.wallet-btc-bch.pages.dev/sitemap.xml
