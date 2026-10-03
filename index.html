@@ -1467,6 +1467,170 @@ document.getElementById("newMarketList").innerHTML=
 
 
 </script>
+    <style>
+
+.theme-panel{
+display:none;
+background:white;
+padding:15px;
+border-radius:20px;
+margin-top:15px;
+}
+
+.theme-btn{
+
+width:35px;
+height:35px;
+border-radius:50%;
+border:2px solid #222;
+margin:5px;
+cursor:pointer;
+
+}
+
+
+</style>
+
+
+
+<script>
+
+
+// انگلیسی کردن جهت و نوشته های کیف
+
+function setWalletEnglish(){
+
+let wallet=document.getElementById("wallet");
+
+if(wallet){
+
+wallet.style.direction="ltr";
+wallet.style.textAlign="left";
+
+}
+
+}
+
+
+
+
+// اضافه کردن بخش تم داخل تنظیمات
+
+function addThemeMenu(){
+
+
+let settings =
+document.getElementById("settingsPage");
+
+
+if(settings && !document.getElementById("themePanel")){
+
+
+let div=document.createElement("div");
+
+div.id="themePanel";
+
+div.className="theme-panel";
+
+
+div.innerHTML=`
+
+<h3>
+Theme
+</h3>
+
+
+<button class="theme-btn" style="background:#ffe96b"
+onclick="changeTheme('#ffe96b')"></button>
+
+
+<button class="theme-btn" style="background:#111"
+onclick="changeTheme('#111')"></button>
+
+
+<button class="theme-btn" style="background:#2196f3"
+onclick="changeTheme('#2196f3')"></button>
+
+
+<button class="theme-btn" style="background:#9c27b0"
+onclick="changeTheme('#9c27b0')"></button>
+
+
+<button class="theme-btn" style="background:#ff5722"
+onclick="changeTheme('#ff5722')"></button>
+
+
+<button class="theme-btn" style="background:#4caf50"
+onclick="changeTheme('#4caf50')"></button>
+
+
+<button class="theme-btn" style="background:#00bcd4"
+onclick="changeTheme('#00bcd4')"></button>
+
+
+<button class="theme-btn" style="background:#e91e63"
+onclick="changeTheme('#e91e63')"></button>
+
+
+<button class="theme-btn" style="background:#795548"
+onclick="changeTheme('#795548')"></button>
+
+
+<button class="theme-btn" style="background:#607d8b"
+onclick="changeTheme('#607d8b')"></button>
+
+
+`;
+
+
+settings.appendChild(div);
+
+
+}
+
+
+}
+
+
+
+
+function changeTheme(color){
+
+document.body.style.background=color;
+
+localStorage.setItem(
+"walletTheme",
+color
+);
+
+}
+
+
+
+setInterval(function(){
+
+addThemeMenu();
+
+setWalletEnglish();
+
+},1000);
+
+
+
+// نگه داشتن تم انتخاب شده
+
+let savedTheme =
+localStorage.getItem("walletTheme");
+
+
+if(savedTheme){
+
+document.body.style.background=savedTheme;
+
+}
+
+
+</script>
 
 </body>
   </html>
