@@ -698,5 +698,59 @@ alert(
 
 
 </script>
+  <script>
+
+// بررسی ورود قبلی هنگام باز شدن کیف
+
+window.onload=function(){
+
+let savedUser=localStorage.getItem("cryptoUser");
+let savedPass=localStorage.getItem("cryptoPass");
+
+
+if(savedUser && savedPass){
+
+document.getElementById("loginPage").style.display="none";
+
+}
+
+}
+
+
+
+// ورود و ذخیره دائمی
+
+function enterWallet(){
+
+let user=
+document.getElementById("userName").value;
+
+
+let pass=
+document.getElementById("userPass").value;
+
+
+
+if(!user || !pass){
+
+alert("نام کاربری و رمز را وارد کنید");
+return;
+
+}
+
+
+localStorage.setItem("cryptoUser",user);
+
+localStorage.setItem("cryptoPass",pass);
+
+
+document.getElementById("loginPage").style.display="none";
+
+
+alert("ورود موفق شد");
+
+}
+
+      </script>
 </body>
 </html>
