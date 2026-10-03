@@ -1,10 +1,10 @@
 {
-  "name": "Crypto Wallet",
-  "short_name": "Wallet",
-  "description": "Secure crypto wallet application",
+  "name": "WALLET BTC",
+  "short_name": "WALLET BTC",
+  "description": "Bitcoin crypto wallet application",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#111111",
+  "background_color": "#ffe96b",
   "theme_color": "#ffd000",
   "orientation": "portrait",
   "icons": [
