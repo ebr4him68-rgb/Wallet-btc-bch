@@ -1,6 +1,17 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl"><meta name="google-site-verification" content="lZLR5uhyQqsieKLPlzF1qPCvRwreEXdlfhfuPFujwiE" />
-<head>
+<head><head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Crypto Wallet</title>
+
+<meta name="description" content="Crypto Wallet - Secure digital wallet for BTC BCH LTC DOGE">
+
+<meta name="google-site-verification" content="lZLR5uhyQqsieKLPlzF1qPCvRwreEXdlfhfuPFujwiE" />
+
+</head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Crypto Wallet</title>
