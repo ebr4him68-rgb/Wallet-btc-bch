@@ -544,5 +544,159 @@ alert("خارج شدید");
 
 
 </script>
+  <style>
+
+#loginPage{
+position:fixed;
+inset:0;
+background:#0b7d3b;
+display:flex;
+align-items:center;
+justify-content:center;
+z-index:9999;
+font-family:tahoma;
+}
+
+.loginBox{
+background:#111;
+color:white;
+width:320px;
+padding:25px;
+border-radius:25px;
+text-align:center;
+}
+
+.coinsLogo{
+display:flex;
+justify-content:center;
+gap:10px;
+font-size:35px;
+margin:20px 0;
+}
+
+.loginBox input{
+width:90%;
+padding:12px;
+margin:8px;
+border-radius:12px;
+border:0;
+}
+
+.loginBox button{
+width:95%;
+padding:13px;
+margin-top:10px;
+border:0;
+border-radius:15px;
+background:#00d26a;
+font-weight:bold;
+font-size:16px;
+}
+
+.walletTitle{
+font-size:20px;
+}
+
+
+</style>
+
+
+<div id="loginPage">
+
+
+<div class="loginBox">
+
+
+<div class="walletTitle">
+💰 کیف بیت کوین بیت کش لایت و دوج
+</div>
+
+
+<div class="coinsLogo">
+
+<span>₿</span>
+<span>🟢</span>
+<span>Ł</span>
+<span>🐕</span>
+
+</div>
+
+
+<h3>
+ورود به کیف ارز دیجیتال
+</h3>
+
+
+<input id="userName"
+placeholder="نام کاربری">
+
+
+<input id="userPass"
+type="password"
+placeholder="رمز عبور">
+
+
+<button onclick="enterWallet()">
+ثبت نام / ورود
+</button>
+
+
+</div>
+
+
+</div>
+
+
+
+<script>
+
+
+function enterWallet(){
+
+
+let user=
+document.getElementById("userName").value;
+
+
+let pass=
+document.getElementById("userPass").value;
+
+
+
+if(!user || !pass){
+
+alert("نام کاربری و رمز را وارد کنید");
+
+return;
+
+}
+
+
+
+localStorage.setItem(
+"cryptoUser",
+user
+);
+
+
+localStorage.setItem(
+"cryptoPass",
+pass
+);
+
+
+
+document.getElementById("loginPage").style.display="none";
+
+
+alert(
+"ورود موفق شد - کیف آماده است"
+);
+
+
+}
+
+
+</script>
 </body>
 </html>
