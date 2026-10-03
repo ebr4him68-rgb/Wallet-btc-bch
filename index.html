@@ -334,5 +334,215 @@ $0
 );
 
 </script>
+  <style>
+
+.settings-btn{
+position:fixed;
+top:10px;
+left:10px;
+background:#222;
+color:white;
+padding:12px;
+border-radius:50%;
+cursor:pointer;
+z-index:999;
+font-size:22px;
+}
+
+.settings-box{
+display:none;
+position:fixed;
+top:60px;
+left:10px;
+width:280px;
+background:#222;
+padding:15px;
+border-radius:20px;
+z-index:999;
+}
+
+.settings-box input{
+width:90%;
+padding:10px;
+margin:5px;
+border-radius:10px;
+}
+
+.settings-box button{
+width:95%;
+padding:10px;
+margin:5px;
+border-radius:10px;
+background:#ffb000;
+border:0;
+}
+
+</style>
+
+
+<div class="settings-btn" onclick="openSettings()">
+⚙️
+</div>
+
+
+<div class="settings-box" id="settings">
+
+<h3>تنظیمات کیف</h3>
+
+
+<button onclick="changePass()">
+🔐 تغییر رمز
+</button>
+
+
+<button onclick="registerUser()">
+👤 ثبت نام
+</button>
+
+
+<button onclick="adminLogin()">
+🛡 ادمین
+</button>
+
+
+<button onclick="logout()">
+🚪 خروج
+</button>
+
+
+<div id="adminPanel"></div>
+
+
+</div>
+
+
+
+<script>
+
+
+function openSettings(){
+
+let s=document.getElementById("settings");
+
+s.style.display=
+s.style.display=="block"?
+"none":"block";
+
+}
+
+
+
+// تغییر رمز
+
+function changePass(){
+
+let oldPass=prompt("رمز قبلی:");
+
+let saved=localStorage.getItem("walletPass");
+
+
+if(saved && oldPass!=saved){
+
+alert("رمز قبلی اشتباه است");
+return;
+
+}
+
+
+let n1=prompt("رمز جدید:");
+
+let n2=prompt("تکرار رمز جدید:");
+
+if(n1==n2){
+
+localStorage.setItem("walletPass",n1);
+
+alert("رمز تغییر کرد");
+
+}else{
+
+alert("رمزها برابر نیستند");
+
+}
+
+}
+
+
+
+
+// ثبت نام
+
+function registerUser(){
+
+let user=prompt("نام کاربری:");
+
+if(user){
+
+localStorage.setItem("walletUser",user);
+
+alert("ثبت نام شد: "+user);
+
+}
+
+}
+
+
+
+// ادمین
+
+function adminLogin(){
+
+let pass=prompt("رمز ادمین:");
+
+if(pass=="Admin321"){
+
+
+let users=localStorage.getItem("walletUser") || "کاربری ثبت نشده";
+
+
+document.getElementById("adminPanel").innerHTML=
+
+`
+<hr>
+
+<h4>پنل ادمین</h4>
+
+کاربر:<br>
+${users}
+
+<br><br>
+
+تراکنش ها:
+
+<br>
+
+هنوز تراکنشی ثبت نشده
+
+`;
+
+
+
+}else{
+
+alert("رمز اشتباه");
+
+}
+
+}
+
+
+
+// خروج
+
+function logout(){
+
+localStorage.removeItem("walletUser");
+
+alert("خارج شدید");
+
+}
+
+
+</script>
 </body>
 </html>
