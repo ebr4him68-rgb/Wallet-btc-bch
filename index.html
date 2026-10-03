@@ -1247,6 +1247,226 @@ document.getElementById("marketList").innerHTML=
 
 
     </script>
+    <style>
+
+#marketArea,
+.market-area,
+.market-btn{
+display:none;
+}
+
+
+#newMarketArea{
+margin-top:20px;
+display:none;
+}
+
+
+#newMarketBtn{
+background:#00c853;
+color:white;
+border:0;
+border-radius:25px;
+padding:14px 35px;
+font-size:18px;
+animation:marketBlink 1s infinite;
+}
+
+
+@keyframes marketBlink{
+
+0%{background:#00c853;}
+50%{background:#ffd600;}
+100%{background:#00c853;}
+
+}
+
+
+#newMarketBox{
+
+display:none;
+background:white;
+border-radius:20px;
+padding:15px;
+margin-top:15px;
+max-height:500px;
+overflow:auto;
+
+}
+
+
+.newCoin{
+
+display:flex;
+justify-content:space-between;
+padding:12px;
+border-bottom:1px solid #ddd;
+
+}
+
+</style>
+
+
+
+<div id="newMarketArea">
+
+
+<button id="newMarketBtn" onclick="newMarketOpen()">
+بازار
+</button>
+
+
+<div id="newMarketBox">
+
+<h3>
+۱۰۰ ارز برتر بازار
+</h3>
+
+
+<div id="newMarketList">
+در حال دریافت...
+</div>
+
+
+</div>
+
+
+</div>
+
+
+
+<script>
+
+
+// مخفی کردن بازارهای قبلی
+
+setInterval(function(){
+
+
+document.querySelectorAll(".market-btn,.market-area,#marketArea")
+.forEach(function(e){
+
+e.style.display="none";
+
+});
+
+
+
+let wallet=document.getElementById("wallet");
+
+
+if(wallet && !wallet.classList.contains("hide")){
+
+document.getElementById("newMarketArea").style.display="block";
+
+}else{
+
+document.getElementById("newMarketArea").style.display="none";
+
+}
+
+
+
+},500);
+
+
+
+
+
+function newMarketOpen(){
+
+
+let box=document.getElementById("newMarketBox");
+
+
+if(box.style.display=="block"){
+
+box.style.display="none";
+
+}else{
+
+box.style.display="block";
+
+loadNewMarket();
+
+}
+
+
+}
+
+
+
+
+
+async function loadNewMarket(){
+
+
+try{
+
+
+let r=await fetch(
+
+"https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=false"
+
+);
+
+
+
+let data=await r.json();
+
+
+let html="";
+
+
+
+data.forEach(function(c,i){
+
+
+html+=`
+
+<div class="newCoin">
+
+<span>
+${i+1} ${c.symbol.toUpperCase()}
+<br>
+${c.name}
+</span>
+
+
+<span>
+$${c.current_price.toLocaleString()}
+<br>
+${c.price_change_percentage_24h ?
+c.price_change_percentage_24h.toFixed(2)
+:"0"}%
+
+</span>
+
+
+</div>
+
+`;
+
+});
+
+
+document.getElementById("newMarketList").innerHTML=html;
+
+
+}
+
+catch(e){
+
+document.getElementById("newMarketList").innerHTML=
+"بازار فعلا در دسترس نیست";
+
+}
+
+
+}
+
+
+</script>
 
 </body>
   </html>
