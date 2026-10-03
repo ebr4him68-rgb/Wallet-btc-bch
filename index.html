@@ -1058,5 +1058,79 @@ document.body.style.background=t;
 
 
 </script>
+  <!-- =========================
+     GOOGLE SEO - WALLET
+========================= -->
+<script>
+(function () {
+
+  const seo = {
+    title: "کیف ارز دیجیتال | Bitcoin BCH Litecoin Dogecoin Wallet",
+
+    description:
+      "کیف ارز دیجیتال برای Bitcoin، Bitcoin Cash، Litecoin و Dogecoin. کیف ساده برای مدیریت و دریافت و ارسال ارزهای دیجیتال.",
+
+    keywords:
+      "کیف بیت کوین, کیف BTC, کیف بیت کش, کیف BCH, کیف لایت کوین, کیف LTC, کیف دوج کوین, کیف DOGE, Bitcoin Wallet, Crypto Wallet",
+
+    canonical:
+      "https://9470b254.wallet-btc-bch.pages.dev/"
+  };
+
+  // Title
+  document.title = seo.title;
+
+  // Meta helper
+  function addMeta(name, content) {
+    let el = document.querySelector('meta[name="' + name + '"]');
+
+    if (!el) {
+      el = document.createElement("meta");
+      el.setAttribute("name", name);
+      document.head.appendChild(el);
+    }
+
+    el.setAttribute("content", content);
+  }
+
+  addMeta("description", seo.description);
+  addMeta("keywords", seo.keywords);
+  addMeta("robots", "index, follow");
+  addMeta("author", "Crypto Wallet");
+
+  // Canonical
+  let canonical = document.querySelector('link[rel="canonical"]');
+
+  if (!canonical) {
+    canonical = document.createElement("link");
+    canonical.setAttribute("rel", "canonical");
+    document.head.appendChild(canonical);
+  }
+
+  canonical.setAttribute("href", seo.canonical);
+
+  // Open Graph
+  function addOG(property, content) {
+    let el = document.querySelector('meta[property="' + property + '"]');
+
+    if (!el) {
+      el = document.createElement("meta");
+      el.setAttribute("property", property);
+      document.head.appendChild(el);
+    }
+
+    el.setAttribute("content", content);
+  }
+
+  addOG("og:title", seo.title);
+  addOG("og:description", seo.description);
+  addOG("og:type", "website");
+  addOG("og:url", seo.canonical);
+
+})();
+</script>
+<!-- =========================
+     END GOOGLE SEO
+========================= -->
 </body>
 </html>
