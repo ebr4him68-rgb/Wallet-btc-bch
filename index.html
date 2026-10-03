@@ -897,5 +897,166 @@ setInterval(extraPrices,60000);
 
 
 </script>
+  <style>
+
+.themeBox{
+display:none;
+background:#333;
+padding:10px;
+border-radius:15px;
+margin-top:10px;
+}
+
+.themeBox button{
+margin:4px;
+padding:10px;
+border-radius:12px;
+border:0;
+}
+
+.yellowBtn{background:#ffd900}
+.blueBtn{background:#0066ff;color:white}
+.purpleBtn{background:#7b00ff;color:white}
+.greenBtn{background:#00b050;color:white}
+
+
+</style>
+
+
+<script>
+
+
+// خروج فقط از کیف
+
+function logout(){
+
+document.getElementById("loginPage").style.display="flex";
+
+document.getElementById("settings").style.display="none";
+
+}
+
+
+
+// اضافه کردن منوی تم
+
+let settingsBox=document.getElementById("settings");
+
+
+if(settingsBox){
+
+
+settingsBox.insertAdjacentHTML(
+"beforeend",
+
+`
+
+<button onclick="showThemes()">
+
+🎨 تم کیف
+
+</button>
+
+
+<div class="themeBox" id="themeBox">
+
+
+<button class="yellowBtn" onclick="setTheme('#ffd900')">
+
+زرد
+
+</button>
+
+
+<button class="blueBtn" onclick="setTheme('#0066ff')">
+
+آبی
+
+</button>
+
+
+<button class="purpleBtn" onclick="setTheme('#7b00ff')">
+
+بنفش
+
+</button>
+
+
+<button class="greenBtn" onclick="setTheme('#00b050')">
+
+سبز
+
+</button>
+
+
+</div>
+
+
+`
+
+);
+
+
+}
+
+
+
+// باز کردن تم ها
+
+function showThemes(){
+
+let box=document.getElementById("themeBox");
+
+
+box.style.display =
+box.style.display=="block"?
+"none":"block";
+
+
+}
+
+
+
+// تغییر رنگ
+
+function setTheme(color){
+
+
+document.body.style.background=color;
+
+
+localStorage.setItem(
+"walletTheme",
+color
+);
+
+
+}
+
+
+
+// حفظ تم بعد از رفرش
+
+window.addEventListener(
+"load",
+function(){
+
+let t=localStorage.getItem("walletTheme");
+
+
+if(t){
+
+document.body.style.background=t;
+
+}
+
+
+}
+
+);
+
+
+
+</script>
 </body>
 </html>
