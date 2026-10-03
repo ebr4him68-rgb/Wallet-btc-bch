@@ -838,6 +838,62 @@ alert("رمز اشتباه است");
 
 
 </script>
+    <style>
+
+.settings-btn{
+position:fixed;
+top:15px;
+left:15px;
+width:50px;
+height:50px;
+border-radius:50%;
+background:#222;
+color:white;
+font-size:25px;
+border:0;
+display:none;
+z-index:999;
+}
+
+</style>
+
+
+<button id="settingButton" class="settings-btn" onclick="openSettings()">
+⚙
+</button>
+
+
+<script>
+
+// نمایش تنظیمات فقط بعد از ورود
+
+function showSettingButton(){
+
+let wallet =
+document.getElementById("wallet");
+
+
+if(wallet && !wallet.classList.contains("hide")){
+
+document.getElementById("settingButton").style.display="block";
+
+}
+
+else{
+
+document.getElementById("settingButton").style.display="none";
+
+}
+
+}
+
+
+// بررسی هر نیم ثانیه وضعیت ورود
+
+setInterval(showSettingButton,500);
+
+
+</script>
 
 
 </body>
